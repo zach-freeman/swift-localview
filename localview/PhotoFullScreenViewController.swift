@@ -9,8 +9,8 @@
 import UIKit
 
 class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
-
-  var containerScrollView: CenterImageScrollView!
+  
+  var containerScrollView: UIScrollView!
   @IBOutlet var fullImageView: UIImageView!
   @IBOutlet weak var commentTextView: UITextView!
   @IBOutlet weak var imageDownloadProgressView: UIProgressView!
@@ -31,7 +31,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
       self.createViews()
     }
     
-      // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.
   }
   
   func orientationChanged(note: NSNotification)
@@ -42,7 +42,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     self.containerScrollView.removeFromSuperview()
     self.createViews()
     self.setupImageInScrollView()
-
+    
   }
   
   func createViews() -> Void {
@@ -64,8 +64,8 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
   }
   
   func createScrollView(viewBounds:CGRect) {
-  // Create the scroll view
-    self.containerScrollView = CenterImageScrollView(frame: viewBounds)
+    // Create the scroll view
+    self.containerScrollView = UIScrollView(frame: viewBounds)
     self.containerScrollView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
     self.containerScrollView.showsHorizontalScrollIndicator = false
     self.containerScrollView.showsVerticalScrollIndicator = false
@@ -77,7 +77,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
   
   func createImageView(viewBounds:CGRect) {
     self.fullImageView = UIImageView(frame:viewBounds)
-  
+    
     self.fullImageView.contentMode = UIViewContentMode.ScaleAspectFill
     self.fullImageView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
     self.fullImageView.clipsToBounds = true
@@ -96,11 +96,11 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
   }
   
   override func didReceiveMemoryWarning() {
-      super.didReceiveMemoryWarning()
-      // Dispose of any resources that can be recreated.
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
   }
   
- // MARK: - Scroll View Delegate
+  // MARK: - Scroll View Delegate
   func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
     return self.fullImageView;
   }
@@ -131,7 +131,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         self.slideAnimateImage()
         self.imageDownloadProgressView.hidden = true;
       }
-
+      
     }
     sdWebImageManager.downloadImageWithURL(self.flickrPhoto?.bigImageUrl, options: nil, progress: progressBlock, completed: completionBlock)
     var photoTitle : String = self.flickrPhoto!.title!
@@ -150,11 +150,11 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
   func setupImageInScrollView() {
     self.containerScrollView.minimumZoomScale = 1;
     self.containerScrollView.zoomScale = 1;
-  
+    
     self.fullImageView.frame = CGRectMake(0, 0, self.fullImage!.size.width, self.fullImage!.size.height);
     self.fullImageView.image = self.fullImage;
     self.containerScrollView.contentSize = self.fullImage!.size;
-  
+    
     // Calculate Min
     let viewSize:CGSize = self.containerScrollView.bounds.size;
     let xScale:CGFloat = viewSize.width / self.fullImage!.size.width;
@@ -166,11 +166,26 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     self.containerScrollView.zoomScale = self.containerScrollView.minimumZoomScale;
     
     self.centerScrollViewContent()
-  
+    
   }
   
   func centerScrollViewContent() {
-    self.containerScrollView.setContentOffset(CGPointZero, animated: true)
+    let boundsSize = self.containerScrollView.bounds.size
+    var contentsFrame = self.fullImageView.frame
+    
+    if contentsFrame.size.width < boundsSize.width {
+      contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0
+    } else {
+      contentsFrame.origin.x = 0.0
+    }
+    
+    if contentsFrame.size.height < boundsSize.height {
+      contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0
+    } else {
+      contentsFrame.origin.y = 0.0
+    }
+    
+    self.fullImageView.frame = contentsFrame
   }
   
   func slideAnimateImage() {
@@ -181,5 +196,5 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     animation.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionEaseOut)
     self.fullImageView.layer.addAnimation(animation, forKey: nil)
   }
-
+  
 }
