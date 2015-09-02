@@ -170,22 +170,22 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
   }
   
   func centerScrollViewContent() {
-    let boundsSize = self.containerScrollView.bounds.size
-    var contentsFrame = self.fullImageView.frame
+    let scrollViewSize = self.containerScrollView.bounds.size
+    var imageFrame = self.fullImageView.frame
     
-    if contentsFrame.size.width < boundsSize.width {
-      contentsFrame.origin.x = (boundsSize.width - contentsFrame.size.width) / 2.0
+    if imageFrame.size.width < scrollViewSize.width {
+      imageFrame.origin.x = (scrollViewSize.width - imageFrame.size.width) / 2.0
     } else {
-      contentsFrame.origin.x = 0.0
+      imageFrame.origin.x = 0.0
     }
     
-    if contentsFrame.size.height < boundsSize.height {
-      contentsFrame.origin.y = (boundsSize.height - contentsFrame.size.height) / 2.0
+    if imageFrame.size.height < scrollViewSize.height {
+      imageFrame.origin.y = (scrollViewSize.height - imageFrame.size.height) / 2.0
     } else {
-      contentsFrame.origin.y = 0.0
+      imageFrame.origin.y = 0.0
     }
     
-    self.fullImageView.frame = contentsFrame
+    self.fullImageView.frame = imageFrame
   }
   
   func slideAnimateImage() {
