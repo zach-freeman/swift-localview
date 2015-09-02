@@ -47,7 +47,6 @@
 		F910538B1B8A080400AF0A71 /* PhotoListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F910538A1B8A080400AF0A71 /* PhotoListManager.swift */; };
 		F91142621B7FD35600992E9E /* PhotoLoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91142611B7FD35600992E9E /* PhotoLoadViewController.swift */; };
 		F93004C81B80BCDC007E74C1 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93004C71B80BCDC007E74C1 /* Utils.swift */; };
-		F96DFE381B9245FA004BC30D /* CenterImageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96DFE371B9245FA004BC30D /* CenterImageScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -204,7 +203,6 @@
 		F910538A1B8A080400AF0A71 /* PhotoListManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoListManager.swift; sourceTree = "<group>"; };
 		F91142611B7FD35600992E9E /* PhotoLoadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLoadViewController.swift; sourceTree = "<group>"; };
 		F93004C71B80BCDC007E74C1 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
-		F96DFE371B9245FA004BC30D /* CenterImageScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenterImageScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,7 +337,6 @@
 				C3D4AA971B7D0E160096656F /* PhotoListFetcher.swift */,
 				C3D4AA991B7D100B0096656F /* FlickrPhoto.swift */,
 				C3304DB41B7E83DE00968E0D /* PhotoFullScreenViewController.swift */,
-				F96DFE371B9245FA004BC30D /* CenterImageScrollView.swift */,
 				F91142611B7FD35600992E9E /* PhotoLoadViewController.swift */,
 				F93004C71B80BCDC007E74C1 /* Utils.swift */,
 				F91053801B891A2C00AF0A71 /* NetworkStatus.swift */,
@@ -557,7 +554,6 @@
 				C3D4AA9A1B7D100B0096656F /* FlickrPhoto.swift in Sources */,
 				C3EC11B71B874E9B00FB672C /* SDWebImagePrefetcher.m in Sources */,
 				C3EC11B61B874E9B00FB672C /* SDWebImageManager.m in Sources */,
-				F96DFE381B9245FA004BC30D /* CenterImageScrollView.swift in Sources */,
 				C3304DB51B7E83DE00968E0D /* PhotoFullScreenViewController.swift in Sources */,
 				C3EC11BD1B874E9B00FB672C /* UIImageView+WebCache.m in Sources */,
 				C3EC11B21B874E9B00FB672C /* SDWebImageCompat.m in Sources */,
