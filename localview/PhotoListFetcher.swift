@@ -36,8 +36,8 @@ class PhotoListFetcher: NSOperation {
         for (_, subJson) in innerJson["photos"]["photo"] {
           let flickrPhoto : FlickrPhoto = FlickrPhoto()
           flickrPhoto.title = subJson["title"].string
-          flickrPhoto.bigImageUrl = flickrPhoto.photoUrlForSize(FlickrPhoto.FlickrPhotoSize.PhotoSizeLarge1024, photoDictionary: subJson)
-          flickrPhoto.smallImageUrl = flickrPhoto.photoUrlForSize(FlickrPhoto.FlickrPhotoSize.PhotoSizeSmallSquare75, photoDictionary: subJson)
+          flickrPhoto.bigImageUrl = flickrPhoto.photoUrlForSize(FlickrConstants.BIG_IMAGE_SIZE, photoDictionary: subJson)
+          flickrPhoto.smallImageUrl = flickrPhoto.photoUrlForSize(FlickrConstants.SMALL_IMAGE_SIZE, photoDictionary: subJson)
           flickrPhoto.photoSetId = subJson["id"].string
           self.flickrPhotos.append(flickrPhoto)
         }
