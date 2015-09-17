@@ -31,11 +31,9 @@ class PhotoListFetcher: NSOperation {
     }
     
     let flickrSearchParameters = ["method": FlickrConstants.SEARCH_METHOD, "api_key": FlickrConstants.FLICKR_KEY, "lat": self.currentLatitude, "lon": self.currentLongitude, "per_page": FlickrConstants.NUMBER_OF_PHOTOS, "format": FlickrConstants.FORMAT_TYPE, "privacy_filter": FlickrConstants.PRIVACY_FILTER, "nojsoncallback": FlickrConstants.JSON_CALLBACK]
-    Alamofire.request(Method.GET, FlickrConstants.FLICKR_URL, parameters: flickrSearchParameters as? [String : AnyObject]).responseJSON { (request, response, data, error) in
-      if (data != nil) {
-        var json:JSON = JSON(data!)
-        var innerJson:JSON = JSON(data!)
-        for (key, subJson) in innerJson["photos"]["photo"] {
+    Alamofire.request(Method.GET, FlickrConstants.FLICKR_URL, parameters: flickrSearchParameters as? [String : AnyObject]).responseJSON { (request, response, result) in
+        var innerJson:JSON = JSON(result.value!)
+        for (_, subJson) in innerJson["photos"]["photo"] {
           let flickrPhoto : FlickrPhoto = FlickrPhoto()
           flickrPhoto.title = subJson["title"].string
           flickrPhoto.bigImageUrl = flickrPhoto.photoUrlForSize(FlickrPhoto.FlickrPhotoSize.PhotoSizeLarge1024, photoDictionary: subJson)
@@ -47,7 +45,6 @@ class PhotoListFetcher: NSOperation {
           self.delegate?.photoListFetcherDidFinish(self)
         })
         
-      }
       
       
 

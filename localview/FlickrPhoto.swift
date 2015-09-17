@@ -47,11 +47,11 @@ public class FlickrPhoto: NSObject {
   var title : String?
   
   func photoUrlForSize(size: FlickrPhotoSize, photoDictionary: JSON!) -> NSURL {
-    var photoId = photoDictionary["id"].string!
-    var server = photoDictionary["server"].string!
+    let photoId = photoDictionary["id"].string!
+    let server = photoDictionary["server"].string!
    
-    var farm : String? = photoDictionary["farm"].string
-    var secret = photoDictionary["secret"].string!
+    let farm : String? = photoDictionary["farm"].string
+    let secret = photoDictionary["secret"].string!
     
     let photoUrl = photoUrlForSize(size, photoId: photoId, server: server, secret: secret, farm: farm)
     return photoUrl
@@ -61,13 +61,13 @@ public class FlickrPhoto: NSObject {
     // https://farm{farm-id}.static.flickr.com/{server-id}/{id}_{secret}_[mstb].jpg
     // https://farm{farm-id}.static.flickr.com/{server-id}/{id}_{secret}.jpg
     var photoUrlString = "https://"
-    if let unwrappedFarm = farm {
-      photoUrlString += "farm\(farm)."
+    if let _ = farm {
+      photoUrlString += "farm\(farm!)."
     }
-    var sizeSuffix = suffixForSize(size)
-    assert(count(server) > 0, "Server attribute is required")
-    assert(count(secret) > 0, "Secret attribute is required")
-    assert(count(photoId) > 0, "Id attribute is required")
+    let sizeSuffix = suffixForSize(size)
+    assert(server.characters.count > 0, "Server attribute is required")
+    assert(secret.characters.count > 0, "Secret attribute is required")
+    assert(photoId.characters.count > 0, "Id attribute is required")
     photoUrlString += FlickrConstants.FLICKR_PHOTO_SOURCE_HOST + "/\(server)/\(photoId)_\(secret)_\(sizeSuffix).jpg"
     return NSURL(string: photoUrlString)!
   }

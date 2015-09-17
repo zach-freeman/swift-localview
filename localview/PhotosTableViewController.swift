@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class PhotosTableViewController: UITableViewController, UITableViewDelegate, UITableViewDataSource, PhotoListManagerDelegate {
+class PhotosTableViewController: UITableViewController, PhotoListManagerDelegate {
 
   var flickrPhotoList : [FlickrPhoto] = []
   var photoListManager:PhotoListManager!
@@ -63,7 +63,7 @@ class PhotosTableViewController: UITableViewController, UITableViewDelegate, UIT
     Utils.setupRoundedCornersForLayer(previewImageLayer)
     let placeholder:UIImage = UIImage(named: "placeholder")!
     cell.previewImageView.sd_setImageWithURL(self.flickrPhotoList[indexPath.row].smallImageUrl!, placeholderImage: placeholder)
-    var photoTitle : String = self.flickrPhotoList[indexPath.row].title!
+    let photoTitle : String = self.flickrPhotoList[indexPath.row].title!
     if photoTitle.isEmpty {
       cell.titleLabel.text = "Title not available"
       cell.titleLabel.textColor = UIColor.grayColor()

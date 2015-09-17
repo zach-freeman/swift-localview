@@ -21,8 +21,8 @@ class NetworkStatus: NSOperation {
       return
     }
     
-    var reachableUrl = NSURL(string: "http://www.google.com")
-    var reachableData = NSData(contentsOfURL:reachableUrl!)
+    let reachableUrl = NSURL(string: "http://www.google.com")
+    let reachableData = NSData(contentsOfURL:reachableUrl!)
     if reachableData != nil {
       self.isReachable = true
     }

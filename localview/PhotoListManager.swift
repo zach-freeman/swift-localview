@@ -17,7 +17,7 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
   var flickrPhotoList : [FlickrPhoto] = []
   var locationUpdater:LocationUpdater!
   var networkAccessQueue:NSOperationQueue {
-    var queue = NSOperationQueue()
+    let queue = NSOperationQueue()
     queue.name = "NetworkAccessQueue"
     queue.maxConcurrentOperationCount = 1
     return queue
@@ -32,7 +32,7 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
   // MARK: - Network Status
   func startNetworkStatus() {
     
-    var networkStatusOperation : NetworkStatus = NetworkStatus();
+    let networkStatusOperation : NetworkStatus = NetworkStatus();
     networkStatusOperation.delegate = self
     self.networkAccessQueue.addOperation(networkStatusOperation)
   }
@@ -65,14 +65,14 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
   // MARK: - Photo List Fetcher
   func startPhotoListFetcherWithCoordinates(latitude:String, longitude:String) {
     
-    var photoListFetcherOperation : PhotoListFetcher = PhotoListFetcher(currentLatitude: latitude, currentLongitude: longitude)
+    let photoListFetcherOperation : PhotoListFetcher = PhotoListFetcher(currentLatitude: latitude, currentLongitude: longitude)
     photoListFetcherOperation.delegate = self
     self.networkAccessQueue.addOperation(photoListFetcherOperation)
   }
   
   func photoListFetcherDidFinish(photoListFetcher: PhotoListFetcher) {
     self.networkAccessQueue.cancelAllOperations()
-    if count(photoListFetcher.flickrPhotos) > 0 {
+    if photoListFetcher.flickrPhotos.count > 0 {
       self.flickrPhotoList = photoListFetcher.flickrPhotos
       dispatch_async(dispatch_get_main_queue(), {
         self.delegate?.photoListManagerDidFinish(self)

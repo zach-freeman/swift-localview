@@ -23,9 +23,9 @@ class FlickrPhotoTests: XCTestCase {
 
     func testPhotoUrlForSize() {
         // This is an example of a functional test case.
-      var flickrPhoto = FlickrPhoto()
+      let flickrPhoto = FlickrPhoto()
       let expectedUrlString : String = "https://farm1.static.flickr.com/2/1418878_1e9228336_b.jpg"
-      var expectedUrl = NSURL(string: expectedUrlString)
+      let expectedUrl = NSURL(string: expectedUrlString)
       let photoUrl = flickrPhoto.photoUrlForSize(FlickrPhoto.FlickrPhotoSize.PhotoSizeLarge1024, photoId: "1418878", server: "2", secret: "1e9228336", farm: "1")
       XCTAssertEqual(expectedUrl!, photoUrl, "pass")
       

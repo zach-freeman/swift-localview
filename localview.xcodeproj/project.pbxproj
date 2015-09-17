@@ -50,6 +50,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C37E997C1BAAFCB4001DC762 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C3D5AC2E1B85F6A4008C5E7B /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4202FE01B667AA100C997FB;
+			remoteInfo = "Alamofire watchOS";
+		};
+		C37E99821BAAFCB4001DC762 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C39DF59D1B85F7E0007A3572 /* SwiftyJSON.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4D7CCE81B9465A700EE7221;
+			remoteInfo = "SwiftyJSON watchOS";
+		};
 		C39DF5A41B85F7E0007A3572 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C39DF59D1B85F7E0007A3572 /* SwiftyJSON.xcodeproj */;
@@ -241,6 +255,7 @@
 				C39DF5A71B85F7E0007A3572 /* SwiftyJSON iOS Tests.xctest */,
 				C39DF5A91B85F7E0007A3572 /* SwiftyJSON.framework */,
 				C39DF5AB1B85F7E0007A3572 /* SwiftyJSON OSX Tests.xctest */,
+				C37E99831BAAFCB4001DC762 /* SwiftyJSON.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -260,6 +275,7 @@
 			children = (
 				C3D5AC361B85F6A4008C5E7B /* Alamofire.framework */,
 				C3D5AC381B85F6A4008C5E7B /* Alamofire.framework */,
+				C37E997D1BAAFCB4001DC762 /* Alamofire.framework */,
 				C3D5AC3A1B85F6A4008C5E7B /* Alamofire iOS Tests.xctest */,
 				C3D5AC3C1B85F6A4008C5E7B /* Alamofire OSX Tests.xctest */,
 			);
@@ -424,7 +440,9 @@
 		C3F318A71B7CD9EB00899FB6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0640;
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = sparkwing;
 				TargetAttributes = {
 					C3F318AE1B7CD9EB00899FB6 = {
@@ -466,6 +484,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		C37E997D1BAAFCB4001DC762 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = C37E997C1BAAFCB4001DC762 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C37E99831BAAFCB4001DC762 /* SwiftyJSON.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftyJSON.framework;
+			remoteRef = C37E99821BAAFCB4001DC762 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C39DF5A51B85F7E0007A3572 /* SwiftyJSON.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -652,6 +684,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -725,6 +758,7 @@
 				INFOPLIST_FILE = localview/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sparkwing.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "localview/localview-Bridging-Header.h";
 			};
@@ -741,6 +775,7 @@
 				INFOPLIST_FILE = localview/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sparkwing.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "localview/localview-Bridging-Header.h";
 			};
@@ -760,6 +795,7 @@
 				);
 				INFOPLIST_FILE = localviewTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sparkwing.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/localview.app/localview";
 			};
@@ -775,6 +811,7 @@
 				);
 				INFOPLIST_FILE = localviewTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.sparkwing.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/localview.app/localview";
 			};

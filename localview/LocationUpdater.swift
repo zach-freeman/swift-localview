@@ -35,14 +35,14 @@ class LocationUpdater : NSObject, CLLocationManagerDelegate {
     
   }
   
-  func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+  func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
     switch status {
     case .NotDetermined:
-      println("authorization not determined")
+      print("authorization not determined")
       self.locationManager.requestWhenInUseAuthorization()
       break
     case .Denied:
-      println("Authorization Denied")
+      print("Authorization Denied")
       break
     case .AuthorizedWhenInUse, .AuthorizedAlways:
       self.locationManager.startUpdatingLocation()
@@ -53,10 +53,10 @@ class LocationUpdater : NSObject, CLLocationManagerDelegate {
     
   }
     
-  func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+  func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
  
     if self.shouldUpdateLocation == true {
-      if let location = locations.last as? CLLocation {
+      if let location = locations.last {
         self.currentLatitude = "\(location.coordinate.latitude)"
         self.currentLongitude = "\(location.coordinate.longitude)"
       }
