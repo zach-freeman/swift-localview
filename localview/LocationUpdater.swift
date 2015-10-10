@@ -15,11 +15,12 @@ protocol LocationUpdaterDelegate {
 }
 
 class LocationUpdater : NSObject, CLLocationManagerDelegate {
-  var locationUpdaterDelegate : LocationUpdaterDelegate?
-  let locationManager:CLLocationManager = CLLocationManager()
-  var shouldUpdateLocation:Bool!
-  var currentLatitude:String!
-  var currentLongitude:String!
+    var locationUpdaterDelegate : LocationUpdaterDelegate?
+    let locationManager:CLLocationManager = CLLocationManager()
+    var shouldUpdateLocation:Bool!
+    var currentLatitude:String!
+    var currentLongitude:String!
+    var currentPlacemark:String!
   
   override init() {
     super.init()
@@ -59,13 +60,33 @@ class LocationUpdater : NSObject, CLLocationManagerDelegate {
       if let location = locations.last {
         self.currentLatitude = "\(location.coordinate.latitude)"
         self.currentLongitude = "\(location.coordinate.longitude)"
+        self.geocodeLocation(location)
       }
       self.shouldUpdateLocation = false
-      dispatch_async(dispatch_get_main_queue(), {
-        self.locationUpdaterDelegate?.locationAvailable(self)
-      })
+
     }
   }
+    
+    func geocodeLocation(location: CLLocation) {
+        let geocoder:CLGeocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(location, completionHandler: {(placemarks, error)-> Void in
+            if error == nil && placemarks!.count > 0 {
+                if let firstPlacemark = placemarks?[0] {
+                    if (firstPlacemark.ISOcountryCode == "US") {
+                        self.currentPlacemark = firstPlacemark.locality! + ", " + firstPlacemark.administrativeArea! + ", " + firstPlacemark.country!
+                    } else {
+                        self.currentPlacemark = firstPlacemark.locality! + ", " + firstPlacemark.country!
+                    }
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.locationUpdaterDelegate?.locationAvailable(self)
+                    })
+                }
+                
+            }
+            
+        })
+        
+    }
   
 }
 

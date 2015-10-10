@@ -13,18 +13,20 @@ protocol PhotoListManagerDelegate {
 }
 
 class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,PhotoListFetcherDelegate {
-  var delegate : PhotoListManagerDelegate?
-  var flickrPhotoList : [FlickrPhoto] = []
-  var locationUpdater:LocationUpdater!
-  var networkAccessQueue:NSOperationQueue {
-    let queue = NSOperationQueue()
-    queue.name = "NetworkAccessQueue"
-    queue.maxConcurrentOperationCount = 1
-    return queue
-  }
+    var delegate : PhotoListManagerDelegate?
+    var currentPlacemark:String!
+    var flickrPhotoList : [FlickrPhoto] = []
+    var locationUpdater:LocationUpdater!
+    var networkAccessQueue:NSOperationQueue {
+        let queue = NSOperationQueue()
+        queue.name = "NetworkAccessQueue"
+        queue.maxConcurrentOperationCount = 1
+        return queue
+    }
   
   override init() {
     super.init()
+    self.currentPlacemark = ""
     self.startNetworkStatus()
     
   }
@@ -56,6 +58,7 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
   }
   
   func locationAvailable(locationUpdater: LocationUpdater) {
+    self.currentPlacemark = locationUpdater.currentPlacemark
     if !locationUpdater.currentLongitude.isEmpty &&
       !locationUpdater.currentLatitude.isEmpty {
         self.startPhotoListFetcherWithCoordinates(locationUpdater.currentLatitude, longitude: locationUpdater.currentLongitude)
