@@ -36,7 +36,11 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         
         // Do any additional setup after loading the view.
     }
-    
+  
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent;
+    }
+  
     func orientationChanged(note: NSNotification)
     {
         // we have to remove the image and scroll views and re-add them because the
@@ -89,7 +93,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    @IBAction func buttonTapped(sender: AnyObject) {
+    @IBAction func doneButtonTapped(sender: AnyObject) {
         presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -103,6 +107,8 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+  
+
     
     // MARK: - Scroll View Delegate
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
@@ -138,16 +144,12 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
             
         }
         sdWebImageManager.downloadImageWithURL(self.flickrPhoto?.bigImageUrl, options: [], progress: progressBlock, completed: completionBlock)
-        let photoTitle : String = self.flickrPhoto!.title!
+        var photoTitle : String = self.flickrPhoto!.title!
         if photoTitle.isEmpty {
-            self.commentTextView.text = FlickrConstants.TITLE_NOT_AVAILABLE
-            self.commentTextView.textColor = UIColor.grayColor()
-        } else {
-            self.commentTextView.text = photoTitle
+            photoTitle = FlickrConstants.TITLE_NOT_AVAILABLE
         }
         self.commentTextView.text = photoTitle
         self.commentTextView.textAlignment = .Center
-        self.commentTextView.font = UIFont(name: "Helvetica Neue", size: 22)
     }
     
     
