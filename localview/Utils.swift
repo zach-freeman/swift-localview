@@ -10,41 +10,50 @@ import UIKit
 
 class Utils: NSObject {
   
-  class func showNetworkActivityIndicator() {
-    UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-  }
-  
-  class func hideNetworkActivityIndicator() {
-    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-  }
-  
-  class func isPad() -> Bool {
-    if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
-      return true
-    } else {
-      return false
+    class func showNetworkActivityIndicator() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
     }
-  }
-  
-  class func isPhone() -> Bool {
-    if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-      return true
-    } else {
-      return false
+    
+    class func hideNetworkActivityIndicator() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
-  }
-  
-  class func showReachabilityAlert() {
-    let alert = UIAlertView()
-    alert.title = "Error"
-    alert.message = "Unable to load photos. Please connect to a network"
-    alert.addButtonWithTitle("OK")
-    alert.show()
-  }
-  
-  class func setupRoundedCornersForLayer(layer: CALayer) {
-    layer.cornerRadius = 9
-    layer.masksToBounds = true
-  }
+    
+    class func isPad() -> Bool {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    class func isPhone() -> Bool {
+        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    class func showReachabilityAlert() {
+        let alert = UIAlertView()
+        alert.title = "Error"
+        alert.message = "Unable to load photos. Please connect to a network"
+        alert.addButtonWithTitle("OK")
+        alert.show()
+    }
+    
+    class func showAlert(title: String, message: String) {
+        let alert = UIAlertView()
+        alert.title = title
+        alert.message = message
+        alert.addButtonWithTitle("OK")
+        alert.show()
+    }
+    
+    
+    class func setupRoundedCornersForLayer(layer: CALayer) {
+        layer.cornerRadius = 9
+        layer.masksToBounds = true
+    }
   
 }

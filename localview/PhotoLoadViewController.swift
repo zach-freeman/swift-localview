@@ -16,15 +16,22 @@ class PhotoLoadViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    Utils.showNetworkActivityIndicator()
-    self.loadingActivityIndicator.startAnimating()
 
-    // Do any additional setup after loading the view.
+  }
+  
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    Utils.showNetworkActivityIndicator()
+    dispatch_async(dispatch_get_main_queue()) {
+      self.loadingActivityIndicator.startAnimating()
+    }
   }
   
   override func viewDidDisappear(animated: Bool) {
     Utils.hideNetworkActivityIndicator()
-    self.loadingActivityIndicator.stopAnimating()
+    dispatch_async(dispatch_get_main_queue()) {
+      self.loadingActivityIndicator.stopAnimating()
+    }
   }
 
   override func didReceiveMemoryWarning() {
@@ -36,7 +43,7 @@ class PhotoLoadViewController: UIViewController {
     dispatch_async(dispatch_get_main_queue()) {
       self.loadingLabel.text = theLoadingText
       self.loadingLabel.setNeedsDisplay()
-  }
+    }
   }
   
 
