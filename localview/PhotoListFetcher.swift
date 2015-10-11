@@ -50,8 +50,6 @@ class PhotoListFetcher: NSOperation {
                 self.flickrPhotos.append(flickrPhoto)
             }
             dispatch_async(dispatch_get_main_queue(), {
-                print("call back")
-                print("we got \(self.flickrPhotos.count) photos")
                 self.delegate?.photoListFetcherDidFinish(self)
 
             })
