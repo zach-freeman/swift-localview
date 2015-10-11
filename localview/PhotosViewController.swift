@@ -114,11 +114,13 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
     
     func photoListManagerDidFinish(photoListManager : PhotoListManager) {
         self.photoFetchState = .PhotoListFetched
+        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
+        self.collectionView?.hidden = false
         if photoListManager.flickrPhotoList.count > 0 {
             self.flickrPhotoList = photoListManager.flickrPhotoList
-            self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-            self.collectionView?.hidden = false
             self.collectionView?.reloadData()
+        } else {
+            Utils.showAlert("Error", message: "No photos retrieved. Is your Flickr key correct?")
         }
         
     }

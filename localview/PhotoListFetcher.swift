@@ -53,6 +53,7 @@ class PhotoListFetcher: NSOperation {
                 print("call back")
                 print("we got \(self.flickrPhotos.count) photos")
                 self.delegate?.photoListFetcherDidFinish(self)
+
             })
             
         }

@@ -75,13 +75,11 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
   
   func photoListFetcherDidFinish(photoListFetcher: PhotoListFetcher) {
     self.networkAccessQueue.cancelAllOperations()
-    if photoListFetcher.flickrPhotos.count > 0 {
-      self.flickrPhotoList = photoListFetcher.flickrPhotos
-      dispatch_async(dispatch_get_main_queue(), {
+    self.flickrPhotoList = photoListFetcher.flickrPhotos
+    dispatch_async(dispatch_get_main_queue(), {
         self.delegate?.photoListManagerDidFinish(self)
-      })
-      
-    }
+    })
+    
   }
     
 }
