@@ -30,25 +30,13 @@ class PhotoListFetcher: NSOperation {
             return
         }
         
-        let flickrSearchParameters = ["method": FlickrConstants.SEARCH_METHOD,
-            "api_key": FlickrConstants.FLICKR_KEY,
-            "lat": self.currentLatitude,
-            "lon": self.currentLongitude,
-            "per_page": FlickrConstants.NUMBER_OF_PHOTOS,
-            "format": FlickrConstants.FORMAT_TYPE,
-            "privacy_filter": FlickrConstants.PRIVACY_FILTER,
-            "nojsoncallback": FlickrConstants.JSON_CALLBACK]
+        let flickrSearchParameters = FlickrApiUtils.searchParametersForCoordinates(self.currentLatitude, longitude: self.currentLongitude)
         
-        Alamofire.request(Method.GET, FlickrConstants.FLICKR_URL, parameters: flickrSearchParameters as? [String : AnyObject]).responseJSON { (request, response, result) in
-            var innerJson:JSON = JSON(result.value!)
-            for (_, subJson) in innerJson["photos"]["photo"] {
-                let flickrPhoto : FlickrPhoto = FlickrPhoto()
-                flickrPhoto.title = subJson["title"].string
-                flickrPhoto.bigImageUrl = FlickrApiUtils.photoUrlForSize(FlickrApiUtils.FlickrPhotoSize.PhotoSizeLarge1024, photoDictionary: subJson)
-                flickrPhoto.smallImageUrl = FlickrApiUtils.photoUrlForSize(FlickrApiUtils.FlickrPhotoSize.PhotoSizeSmallSquare75, photoDictionary: subJson)
-                flickrPhoto.photoSetId = subJson["id"].string
-                self.flickrPhotos.append(flickrPhoto)
-            }
+        Alamofire.request(Method.GET, FlickrConstants.FLICKR_URL, parameters: flickrSearchParameters).responseJSON { (request, response, result) in
+            
+            let responseJson:JSON = JSON(result.value!)
+            self.flickrPhotos = FlickrApiUtils.setupPhotoListWithJSON(responseJson)
+            
             dispatch_async(dispatch_get_main_queue(), {
                 self.delegate?.photoListFetcherDidFinish(self)
 

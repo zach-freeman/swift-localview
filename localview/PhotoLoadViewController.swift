@@ -39,13 +39,5 @@ class PhotoLoadViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
-  func updateLoadingLabe(theLoadingText: String) {
-    dispatch_async(dispatch_get_main_queue()) {
-      self.loadingLabel.text = theLoadingText
-      self.loadingLabel.setNeedsDisplay()
-    }
-  }
-  
-
 
 }

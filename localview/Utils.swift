@@ -35,11 +35,7 @@ class Utils: NSObject {
     }
     
     class func showReachabilityAlert() {
-        let alert = UIAlertView()
-        alert.title = "Error"
-        alert.message = "Unable to load photos. Please connect to a network"
-        alert.addButtonWithTitle("OK")
-        alert.show()
+        showAlert("Error", message: "Unable to load photos. Please connect to a network")
     }
     
     class func showAlert(title: String, message: String) {

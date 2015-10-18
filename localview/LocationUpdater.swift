@@ -72,11 +72,7 @@ class LocationUpdater : NSObject, CLLocationManagerDelegate {
         geocoder.reverseGeocodeLocation(location, completionHandler: {(placemarks, error)-> Void in
             if error == nil && placemarks!.count > 0 {
                 if let firstPlacemark = placemarks?[0] {
-                    if (firstPlacemark.ISOcountryCode == "US") {
-                        self.currentPlacemark = firstPlacemark.locality! + ", " + firstPlacemark.administrativeArea! + ", " + firstPlacemark.country!
-                    } else {
-                        self.currentPlacemark = firstPlacemark.locality! + ", " + firstPlacemark.country!
-                    }
+                    self.currentPlacemark = self.formatPlacemark(firstPlacemark)
                     dispatch_async(dispatch_get_main_queue(), {
                         self.locationUpdaterDelegate?.locationAvailable(self)
                     })
@@ -86,6 +82,16 @@ class LocationUpdater : NSObject, CLLocationManagerDelegate {
             
         })
         
+    }
+    
+    func formatPlacemark(placemark: CLPlacemark) -> String {
+        var formattedPlacemark:String
+        if (placemark.ISOcountryCode == "US") {
+            formattedPlacemark = placemark.locality! + ", " + placemark.administrativeArea! + ", " + placemark.country!
+        } else {
+            formattedPlacemark = placemark.locality! + ", " + placemark.country!
+        }
+        return formattedPlacemark
     }
   
 }
