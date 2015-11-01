@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate {
+class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate, UIViewControllerPreviewingDelegate{
   
     private let reuseIdentifier = "PhotoCell";
     private let sectionInsets = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
@@ -22,6 +22,17 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if #available(iOS 9.0, *) {
+            if( traitCollection.forceTouchCapability == .Available){
+                
+                registerForPreviewingWithDelegate(self, sourceView: view)
+                
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        
         self.photoFetchState = .PhotoListNotFetched
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         self.photoLoadViewController = storyboard.instantiateViewControllerWithIdentifier("PhotoLoadViewController") as! PhotoLoadViewController
@@ -124,8 +135,38 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         }
         
     }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        
+        guard let indexPath = self.collectionView?.indexPathForItemAtPoint(location) else { return nil }
+        
+        guard let cell = self.collectionView?.cellForItemAtIndexPath(indexPath) else { return nil }
+        guard let photoFullScreenViewController = storyboard?.instantiateViewControllerWithIdentifier("PhotoFullScreenViewController") as? PhotoFullScreenViewController else { return nil }
+        
+        let flickrPhoto = photoForIndexPath(indexPath)
+        photoFullScreenViewController.flickrPhoto = flickrPhoto
+        
+        photoFullScreenViewController.preferredContentSize = CGSize(width: 0.0, height: 300)
+        
+        if #available(iOS 9.0, *) {
+            previewingContext.sourceRect = cell.frame
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        return photoFullScreenViewController
+        
+    }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        
+        showViewController(viewControllerToCommit, sender: self)
+        
+    }
 
 }
+
+
 
 extension PhotosViewController : UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView,
