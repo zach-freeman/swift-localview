@@ -68,7 +68,7 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
   // MARK: - Photo List Fetcher
   func startPhotoListFetcherWithCoordinates(latitude:String, longitude:String) {
     
-    let photoListFetcherOperation : PhotoListFetcher = PhotoListFetcher(currentLatitude: latitude, currentLongitude: longitude)
+    let photoListFetcherOperation : PhotoListFetcher = PhotoListFetcher(currentLatitude: latitude, currentLongitude: longitude, currentNetwork: Network())
     photoListFetcherOperation.delegate = self
     self.networkAccessQueue.addOperation(photoListFetcherOperation)
   }
