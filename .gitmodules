@@ -1,6 +1,6 @@
 [submodule "ThirdPartyLib/Quick"]
 	path = ThirdPartyLib/Quick
-	url = git@github.com:Quick/Quick.git
+	url = https://github.com/Quick/Quick.git
 [submodule "ThirdPartyLib/Nimble"]
 	path = ThirdPartyLib/Nimble
-	url = git@github.com:Quick/Nimble.git
+	url = https://github.com/Quick/Nimble.git
