@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 public class LocalViewTestsHelpers {
     static func bundleFileContentsAsData(filename: String, filetype: String) -> NSData {
@@ -14,5 +15,16 @@ public class LocalViewTestsHelpers {
         let filePath = bundle.pathForResource(filename, ofType: filetype)
         let fileContents:NSData = NSData(contentsOfFile: filePath!)!
         return fileContents
+    }
+    
+    static func fileContentsAsJson(fileContents:NSData) -> JSON {
+        var fileContentsJson:JSON = nil
+        do {
+            let fileContentJsonObject = try NSJSONSerialization.JSONObjectWithData(fileContents, options: NSJSONReadingOptions.MutableContainers)
+            fileContentsJson = JSON(fileContentJsonObject)
+        } catch {
+            print("unable to convert file contents to json")
+        }
+        return fileContentsJson
     }
 }

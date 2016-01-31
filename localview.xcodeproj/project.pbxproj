@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C3304DAF1B7E286800968E0D /* FlickrApiUtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3304DAE1B7E286800968E0D /* FlickrApiUtilsTests.swift */; };
 		C3304DB01B7E291600968E0D /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D4AA991B7D100B0096656F /* FlickrPhoto.swift */; };
 		C3304DB11B7E29CB00968E0D /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D4AA931B7CE6980096656F /* FlickrConstants.swift */; };
 		C3304DB51B7E83DE00968E0D /* PhotoFullScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3304DB41B7E83DE00968E0D /* PhotoFullScreenViewController.swift */; };
@@ -313,7 +312,6 @@
 
 /* Begin PBXFileReference section */
 		C31E12771B874B8C00B3AA67 /* localview-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "localview-Bridging-Header.h"; sourceTree = "<group>"; };
-		C3304DAE1B7E286800968E0D /* FlickrApiUtilsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrApiUtilsTests.swift; sourceTree = "<group>"; };
 		C3304DB41B7E83DE00968E0D /* PhotoFullScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoFullScreenViewController.swift; sourceTree = "<group>"; };
 		C359A8ED1BC54EE70066FCFC /* FlickrApiUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrApiUtils.swift; sourceTree = "<group>"; };
 		C373B6551BC695E500869AC8 /* PopViewTransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopViewTransitionAnimator.swift; sourceTree = "<group>"; };
@@ -573,7 +571,6 @@
 			isa = PBXGroup;
 			children = (
 				C3F318C81B7CD9EB00899FB6 /* Supporting Files */,
-				C3304DAE1B7E286800968E0D /* FlickrApiUtilsTests.swift */,
 				C3749D2D1BCC4B9400BF4729 /* LocationUpdaterTests.swift */,
 				F97C3EB71C0B4E0900EB5362 /* FlickrApiUtilsSpec.swift */,
 				F97C3EB91C0B4EF300EB5362 /* LocalViewTests.swift */,
@@ -1008,7 +1005,6 @@
 				D91E3FC91C136F3000836CC4 /* UIImageView+WebCache.m in Sources */,
 				C3304DB01B7E291600968E0D /* FlickrPhoto.swift in Sources */,
 				D91E3FBE1C136F0B00836CC4 /* SDWebImageDecoder.m in Sources */,
-				C3304DAF1B7E286800968E0D /* FlickrApiUtilsTests.swift in Sources */,
 				D91E3FB71C136C2D00836CC4 /* PhotoFullScreenViewController.swift in Sources */,
 				D91E3FB91C136C3400836CC4 /* Utils.swift in Sources */,
 				D91E3FBA1C136C3800836CC4 /* NetworkStatus.swift in Sources */,
