@@ -9,6 +9,7 @@ This is a simple universal iOS app written in Swift that pulls images from the F
 4. git submodule update
 5. carthage update (Swinject is included via [Carthage](https://github.com/Carthage/Carthage))
 6. open localview.xcodeproj
+7. You can get an API Key from your [Flickr](https://www.flickr.com) account. You need this to use the app. Just drop it in FlickrConstants.swift.
 
 ### Testing ###
 
