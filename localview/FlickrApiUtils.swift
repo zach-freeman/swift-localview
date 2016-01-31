@@ -41,19 +41,6 @@ public class FlickrApiUtils {
         case PhotoSizeVideoPlayer
     }
     
-    class func searchParametersForCoordinates(latitude: String, longitude: String) -> [String : AnyObject] {
-        let flickrSearchParameters:[String:AnyObject] = ["method": FlickrConstants.SEARCH_METHOD,
-            "api_key": FlickrConstants.FLICKR_KEY,
-            "lat": latitude,
-            "lon": longitude,
-            "per_page": FlickrConstants.NUMBER_OF_PHOTOS,
-            "format": FlickrConstants.FORMAT_TYPE,
-            "privacy_filter": FlickrConstants.PRIVACY_FILTER,
-            "nojsoncallback": FlickrConstants.JSON_CALLBACK]
-        return flickrSearchParameters
-        
-    }
-    
     class func setupPhotoListWithJSON(json: JSON) -> [FlickrPhoto] {
         var flickrPhotos:[FlickrPhoto] = []
         for (_, flickrPhotoDictionary) in json["photos"]["photo"] {

@@ -19,27 +19,24 @@ class PhotoListFetcher: NSOperation {
     var flickrPhotos : [FlickrPhoto] = []
     var currentLatitude : String!
     var currentLongitude : String!
+    let network: Networking
     
-    init(currentLatitude : String, currentLongitude: String) {
+    init(currentLatitude : String, currentLongitude: String, currentNetwork: Networking) {
         self.currentLatitude = currentLatitude
         self.currentLongitude = currentLongitude
+        self.network = currentNetwork
     }
     
     override func main() {
         if self.cancelled {
             return
         }
-        
-        let flickrSearchParameters = FlickrApiUtils.searchParametersForCoordinates(self.currentLatitude, longitude: self.currentLongitude)
-        
-        Alamofire.request(Method.GET, FlickrConstants.FLICKR_URL, parameters: flickrSearchParameters).responseJSON { (request, response, result) in
-            
-            let responseJson:JSON = JSON(result.value!)
+        self.network.request(self.currentLatitude, longitude: self.currentLongitude) { response in
+            let responseJson:JSON = JSON(response!)
             self.flickrPhotos = FlickrApiUtils.setupPhotoListWithJSON(responseJson)
-            
             dispatch_async(dispatch_get_main_queue(), {
                 self.delegate?.photoListFetcherDidFinish(self)
-
+                
             })
             
         }

@@ -22,7 +22,6 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         if #available(iOS 9.0, *) {
             if( traitCollection.forceTouchCapability == .Available){
                 
@@ -32,10 +31,12 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         } else {
             // Fallback on earlier versions
         }
-        
+
         self.photoFetchState = .PhotoListNotFetched
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle(forClass: self.dynamicType))
         self.photoLoadViewController = storyboard.instantiateViewControllerWithIdentifier("PhotoLoadViewController") as! PhotoLoadViewController
+
+
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
