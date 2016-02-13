@@ -88,6 +88,7 @@
 		F92C5F451C4C2EA100688BCF /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C5F421C4C1B0C00688BCF /* Network.swift */; };
 		F92C5F461C4C2EA100688BCF /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C5F401C4C1ADD00688BCF /* Networking.swift */; };
 		F93004C81B80BCDC007E74C1 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93004C71B80BCDC007E74C1 /* Utils.swift */; };
+		F9623A911C67F4F800499FEE /* MockPhotoListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9623A901C67F4F800499FEE /* MockPhotoListManager.swift */; };
 		F96891851C5ADB2300B34FFB /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F968917A1C5ADB1B00B34FFB /* Nimble.framework */; };
 		F97857771C43179B00EE9425 /* Swinject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97857761C43179B00EE9425 /* Swinject.framework */; };
 		F97C3EB61C0B4D9D00EB5362 /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F97C3E651C0B4CC000EB5362 /* Quick.framework */; };
@@ -381,6 +382,7 @@
 		F92C5F401C4C1ADD00688BCF /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		F92C5F421C4C1B0C00688BCF /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		F93004C71B80BCDC007E74C1 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		F9623A901C67F4F800499FEE /* MockPhotoListManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPhotoListManager.swift; sourceTree = "<group>"; };
 		F96891701C5ADB1B00B34FFB /* Nimble.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Nimble.xcodeproj; path = ThirdPartyLib/Nimble/Nimble.xcodeproj; sourceTree = "<group>"; };
 		F97857761C43179B00EE9425 /* Swinject.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Swinject.framework; path = Carthage/Build/iOS/Swinject.framework; sourceTree = "<group>"; };
 		F97C3E4E1C0B4CC000EB5362 /* Quick.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Quick.xcodeproj; path = ThirdPartyLib/Quick/Quick.xcodeproj; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 		C3F318C71B7CD9EB00899FB6 /* localviewTests */ = {
 			isa = PBXGroup;
 			children = (
+				F9623A871C67F4D400499FEE /* Mocks */,
 				C3F318C81B7CD9EB00899FB6 /* Supporting Files */,
 				F97C3EB71C0B4E0900EB5362 /* FlickrApiUtilsSpec.swift */,
 				F97C3EB91C0B4EF300EB5362 /* LocalViewTests.swift */,
@@ -590,6 +593,14 @@
 				D91E3FBC1C136DFA00836CC4 /* localviewTests-Bridging-Header.h */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F9623A871C67F4D400499FEE /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				F9623A901C67F4F800499FEE /* MockPhotoListManager.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 		F96891711C5ADB1B00B34FFB /* Products */ = {
@@ -991,6 +1002,7 @@
 				F92C5F451C4C2EA100688BCF /* Network.swift in Sources */,
 				F92C5F461C4C2EA100688BCF /* Networking.swift in Sources */,
 				F97C3EBA1C0B4EF300EB5362 /* LocalViewTests.swift in Sources */,
+				F9623A911C67F4F800499FEE /* MockPhotoListManager.swift in Sources */,
 				D91E3FB81C136C3000836CC4 /* PhotoLoadViewController.swift in Sources */,
 				D91E3FC01C136F1000836CC4 /* SDImageCache.m in Sources */,
 				F92C5F221C4BE01300688BCF /* PhotoListFetcherSpec.swift in Sources */,
