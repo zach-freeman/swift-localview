@@ -4,3 +4,6 @@
 [submodule "ThirdPartyLib/Nimble"]
 	path = ThirdPartyLib/Nimble
 	url = https://github.com/Quick/Nimble.git
+[submodule "ThirdPartyLib/Cedar"]
+	path = ThirdPartyLib/Cedar
+	url = https://github.com/pivotal/cedar.git
