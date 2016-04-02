@@ -75,6 +75,7 @@
 		D91E3FC91C136F3000836CC4 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EC11AC1B874E9B00FB672C /* UIImageView+WebCache.m */; };
 		D91E3FCA1C136F3400836CC4 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EC11AE1B874E9B00FB672C /* UIView+WebCacheOperation.m */; };
 		D91E3FCB1C14A15400836CC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3F318B81B7CD9EB00899FB6 /* Main.storyboard */; };
+		D96FEBF51CB04E4F005AAF89 /* Swinject.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F97857761C43179B00EE9425 /* Swinject.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F91053811B891A2C00AF0A71 /* NetworkStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91053801B891A2C00AF0A71 /* NetworkStatus.swift */; };
 		F91053891B8923DF00AF0A71 /* LocationUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91053881B8923DF00AF0A71 /* LocationUpdater.swift */; };
 		F910538B1B8A080400AF0A71 /* PhotoListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F910538A1B8A080400AF0A71 /* PhotoListManager.swift */; };
@@ -307,6 +308,16 @@
 				C3D5AC3E1B85F6EB008C5E7B /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D96FEBDD1CB04E2B005AAF89 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D96FEBF51CB04E4F005AAF89 /* Swinject.framework in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -663,6 +674,7 @@
 				C3F318C11B7CD9EB00899FB6 /* Frameworks */,
 				C3F318C21B7CD9EB00899FB6 /* Resources */,
 				F978578F1C4317E800EE9425 /* ShellScript */,
+				D96FEBDD1CB04E2B005AAF89 /* CopyFiles */,
 			);
 			buildRules = (
 			);
