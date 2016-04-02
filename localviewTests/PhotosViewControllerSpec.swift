@@ -75,12 +75,11 @@ class PhotosViewControllerSpec: QuickSpec {
             }
         }
         
-        describe("refreshButtonTapped") {
+        describe("refresh") {
             beforeEach {
                 subjectViewController.photoFetchState = FlickrApiUtils.PhotoFetchState.PhotoListFetched
                 expectedPhotoFetchState = FlickrApiUtils.PhotoFetchState.PhotoListNotFetched
-                subjectViewController.refreshButtonTapped(UIControl)
-                
+                subjectViewController.refresh()
             }
             
             it("should hide the collection view") {
