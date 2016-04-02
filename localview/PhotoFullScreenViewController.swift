@@ -28,7 +28,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
             UIDevice.currentDevice().beginGeneratingDeviceOrientationNotifications()
             NSNotificationCenter.defaultCenter().addObserver(
                 self,
-                selector: "orientationChanged:",
+                selector: #selector(PhotoFullScreenViewController.orientationChanged(_:)),
                 name: UIDeviceOrientationDidChangeNotification,
                 object: UIDevice.currentDevice())
             self.createViews()

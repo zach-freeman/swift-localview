@@ -3,28 +3,7 @@ import Nimble
 import Swinject
 
 class PhotoListFetcherSpec: QuickSpec {
-    class MockNetwork: Networking {
-        var requestCount = 0
-        
-        func request(latitude: String, longitude: String, response: AnyObject? -> ()) {
-            requestCount++
-            do {
-                let flickrResponse: NSData = LocalViewTestsHelpers.bundleFileContentsAsData("good-flickr-response", filetype: "json")
-                let flickrResponseJsonObject = try NSJSONSerialization.JSONObjectWithData(flickrResponse, options: NSJSONReadingOptions.MutableContainers)
-                response(flickrResponseJsonObject)
-            } catch _ {
-                print("could not open flickr response file")
-            }
-        }
-    }
-    
-    class MockPhotoListFetcherDelegate : PhotoListFetcherDelegate {
-        var delegateCallCount = 0;
-        func photoListFetcherDidFinish(photoListFetcher : PhotoListFetcher) {
-            delegateCallCount++
-        }
-    }
-    
+
     override func spec() {
         var networkAccessQueue:NSOperationQueue {
             let queue = NSOperationQueue()

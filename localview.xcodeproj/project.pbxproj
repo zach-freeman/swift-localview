@@ -76,6 +76,8 @@
 		D91E3FCA1C136F3400836CC4 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EC11AE1B874E9B00FB672C /* UIView+WebCacheOperation.m */; };
 		D91E3FCB1C14A15400836CC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3F318B81B7CD9EB00899FB6 /* Main.storyboard */; };
 		D96FEBF51CB04E4F005AAF89 /* Swinject.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F97857761C43179B00EE9425 /* Swinject.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D93D330B1C8CE86B00CECF60 /* MockNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D330A1C8CE86B00CECF60 /* MockNetwork.swift */; };
+		D93D33241C8CE8A700CECF60 /* MockPhotoListFetcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D33231C8CE8A700CECF60 /* MockPhotoListFetcherDelegate.swift */; };
 		F91053811B891A2C00AF0A71 /* NetworkStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91053801B891A2C00AF0A71 /* NetworkStatus.swift */; };
 		F91053891B8923DF00AF0A71 /* LocationUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91053881B8923DF00AF0A71 /* LocationUpdater.swift */; };
 		F910538B1B8A080400AF0A71 /* PhotoListManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F910538A1B8A080400AF0A71 /* PhotoListManager.swift */; };
@@ -383,6 +385,8 @@
 		C3F318C91B7CD9EB00899FB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D91E3F991C13680600836CC4 /* PhotosViewControllerSpec.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosViewControllerSpec.swift; sourceTree = "<group>"; };
 		D91E3FBC1C136DFA00836CC4 /* localviewTests-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "localviewTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		D93D330A1C8CE86B00CECF60 /* MockNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockNetwork.swift; sourceTree = "<group>"; };
+		D93D33231C8CE8A700CECF60 /* MockPhotoListFetcherDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPhotoListFetcherDelegate.swift; sourceTree = "<group>"; };
 		F91053801B891A2C00AF0A71 /* NetworkStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkStatus.swift; sourceTree = "<group>"; };
 		F91053881B8923DF00AF0A71 /* LocationUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationUpdater.swift; sourceTree = "<group>"; };
 		F910538A1B8A080400AF0A71 /* PhotoListManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoListManager.swift; sourceTree = "<group>"; };
@@ -610,6 +614,8 @@
 			isa = PBXGroup;
 			children = (
 				F9623A901C67F4F800499FEE /* MockPhotoListManager.swift */,
+				D93D330A1C8CE86B00CECF60 /* MockNetwork.swift */,
+				D93D33231C8CE8A700CECF60 /* MockPhotoListFetcherDelegate.swift */,
 			);
 			name = Mocks;
 			sourceTree = "<group>";
@@ -1013,6 +1019,7 @@
 				F92C5F441C4C2EA100688BCF /* Flickr.swift in Sources */,
 				F92C5F451C4C2EA100688BCF /* Network.swift in Sources */,
 				F92C5F461C4C2EA100688BCF /* Networking.swift in Sources */,
+				D93D330B1C8CE86B00CECF60 /* MockNetwork.swift in Sources */,
 				F97C3EBA1C0B4EF300EB5362 /* LocalViewTests.swift in Sources */,
 				F9623A911C67F4F800499FEE /* MockPhotoListManager.swift in Sources */,
 				D91E3FB81C136C3000836CC4 /* PhotoLoadViewController.swift in Sources */,
@@ -1046,6 +1053,7 @@
 				D91E3FBB1C136C4A00836CC4 /* FadeViewTransitionAnimator.swift in Sources */,
 				D91E3FC41C136F1F00836CC4 /* UIButton+WebCache.m in Sources */,
 				D91E3FC81C136F2D00836CC4 /* UIImageView+HighlightedWebCache.m in Sources */,
+				D93D33241C8CE8A700CECF60 /* MockPhotoListFetcherDelegate.swift in Sources */,
 				D91E3FC51C136F2200836CC4 /* UIImage+GIF.m in Sources */,
 				D91E3FB21C13684C00836CC4 /* PhotosViewController.swift in Sources */,
 			);
