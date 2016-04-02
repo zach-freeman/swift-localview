@@ -19,9 +19,11 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
     var selectedImage: UIImageView?
     let transition = FadeViewTransitionAnimator()
     var fullViewIsLandscape:Bool?
+    var refreshControl:UIRefreshControl?
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView!.alwaysBounceVertical = true
         if #available(iOS 9.0, *) {
             if( traitCollection.forceTouchCapability == .Available){
                 
@@ -35,6 +37,12 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         self.photoFetchState = .PhotoListNotFetched
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle(forClass: self.dynamicType))
         self.photoLoadViewController = storyboard.instantiateViewControllerWithIdentifier("PhotoLoadViewController") as! PhotoLoadViewController
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.tintColor = UIColor.grayColor()
+        self.refreshControl!.addTarget(self, action: #selector(PhotosViewController.refresh), forControlEvents: .ValueChanged)
+        collectionView!.addSubview(self.refreshControl!)
+        collectionView!.alwaysBounceVertical = true
 
 
     }
@@ -49,7 +57,7 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         }
     }
     
-    @IBAction func refreshButtonTapped(sender: AnyObject) {
+    func refresh() {
         self.photoFetchState = .PhotoListNotFetched
         self.collectionView?.hidden = true
         self.startPhotoListManager()
@@ -129,6 +137,7 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
         self.collectionView?.hidden = false
         self.collectionView?.reloadData()
+        self.refreshControl!.endRefreshing()
         if photoListManager.flickrPhotoList.count > 0 {
             self.flickrPhotoList = photoListManager.flickrPhotoList
         } else {
