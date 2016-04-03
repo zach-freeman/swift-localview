@@ -8,5 +8,5 @@
 import SwiftyJSON
 
 protocol Networking {
-    func request(latitude: String, longitude: String, response: AnyObject? -> ())
+    func request(latitude: String, longitude: String, jsonResponse: AnyObject? -> ())
 }

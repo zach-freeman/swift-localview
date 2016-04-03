@@ -1,0 +1,20 @@
+PODS:
+  - Alamofire (3.3.0)
+  - Nuke (3.0.0)
+  - Nuke-Alamofire-Plugin (0.6.0):
+    - Alamofire (~> 3.0)
+    - Nuke (~> 3.0)
+  - Swinject (1.1.1)
+
+DEPENDENCIES:
+  - Nuke
+  - Nuke-Alamofire-Plugin
+  - Swinject (~> 1.1.0)
+
+SPEC CHECKSUMS:
+  Alamofire: 9054db4a1b1ca9e363223183e01cea380159a27c
+  Nuke: 0bf58cc17da620fbfd9ecf67a2dd8d65ed50635e
+  Nuke-Alamofire-Plugin: 410bdb98360c586f8ca736e04dbba78fa1294aae
+  Swinject: 8c1b46e49c604f8c5c1f45f92ef314d3736bbef4
+
+COCOAPODS: 0.39.0

@@ -11,12 +11,12 @@ import Foundation
 class MockNetwork: Networking {
     var requestCount = 0
     
-    func request(latitude: String, longitude: String, response: AnyObject? -> ()) {
+    func request(latitude: String, longitude: String, jsonResponse: AnyObject? -> ()) {
         requestCount += 1
         do {
             let flickrResponse: NSData = LocalViewTestsHelpers.bundleFileContentsAsData("good-flickr-response", filetype: "json")
             let flickrResponseJsonObject = try NSJSONSerialization.JSONObjectWithData(flickrResponse, options: NSJSONReadingOptions.MutableContainers)
-            response(flickrResponseJsonObject)
+            jsonResponse(flickrResponseJsonObject)
         } catch _ {
             print("could not open flickr response file")
         }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Nuke
 
 class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate, UIViewControllerPreviewingDelegate{
   
@@ -23,7 +24,6 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView!.alwaysBounceVertical = true
         if #available(iOS 9.0, *) {
             if( traitCollection.forceTouchCapability == .Available){
                 
@@ -38,13 +38,15 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         let storyboard = UIStoryboard(name: "Main", bundle: NSBundle(forClass: self.dynamicType))
         self.photoLoadViewController = storyboard.instantiateViewControllerWithIdentifier("PhotoLoadViewController") as! PhotoLoadViewController
         
+        self.setupRefreshControl()
+    }
+    
+    func setupRefreshControl() {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.tintColor = UIColor.grayColor()
         self.refreshControl!.addTarget(self, action: #selector(PhotosViewController.refresh), forControlEvents: .ValueChanged)
         collectionView!.addSubview(self.refreshControl!)
         collectionView!.alwaysBounceVertical = true
-
-
     }
     
     override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
@@ -109,7 +111,14 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         let previewImageLayer = cell.smallImageView.layer
         Utils.setupRoundedCornersForLayer(previewImageLayer)
         let placeholder:UIImage = UIImage(named: "placeholder")!
-        cell.smallImageView?.sd_setImageWithURL(flickrPhoto.smallImageUrl!, placeholderImage: placeholder)
+        Nuke.taskWith(flickrPhoto.smallImageUrl!) { response in
+            switch response {
+            case let .Success(image, responseInfo):
+                cell.smallImageView.image = image
+            case let .Failure(error):
+                print(error)
+            }
+        }.resume()
         cell.backgroundColor = UIColor.blackColor()
     
     

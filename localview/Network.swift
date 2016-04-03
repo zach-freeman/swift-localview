@@ -12,11 +12,18 @@ import SwiftyJSON
 
 
 struct Network : Networking {
-    func request(latitude: String, longitude: String, response: AnyObject? -> ()) {
-        Alamofire.request(.GET, Flickr.url, parameters: Flickr.parameters(latitude, longitude: longitude))
-            .responseJSON{ (request, data, result) in
-                response(result.value)
+    func request(latitude: String, longitude: String, jsonResponse: AnyObject? -> ()) {
+        Alamofire.request(.GET,
+            Flickr.url,
+            parameters: Flickr.parameters(latitude, longitude: longitude))
+            .validate()
+            .responseJSON { (response) -> Void in
+                guard response.result.isSuccess else {
+                    print("Error while fetching flickr photos: \(response.result.error)")
+                    return
+                }
                 
+                jsonResponse(response.result.value)
         }
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Nuke
 
 class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     
@@ -120,15 +121,17 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func showPhotoAfterDownload() {
-        let sdWebImageManager:SDWebImageManager = SDWebImageManager.sharedManager()
-        let progressBlock:SDWebImageDownloaderProgressBlock! = {(receivedSize:Int, expectedSize:Int) -> Void in
+        let task = Nuke.taskWith((self.flickrPhoto?.bigImageUrl)!).resume()
+        task.progressHandler = { progress in
+            // Update progress
             self.imageDownloadProgressView.hidden = false;
-            let receivedSizeFloat:Float = NSNumber(integer:receivedSize).floatValue
-            let expectedSizeFloat:Float = NSNumber(integer:expectedSize).floatValue
-            let progress:Float = receivedSizeFloat/expectedSizeFloat;
-            self.imageDownloadProgressView.setProgress(progress, animated: true)
+            //let receivedSizeFloat:Float = NSNumber(integer:receivedSize).floatValue
+            //let expectedSizeFloat:Float = NSNumber(integer:expectedSize).floatValue
+            //let progress:Float = receivedSizeFloat/expectedSizeFloat;
+            self.imageDownloadProgressView.setProgress(Float(progress.fractionCompleted), animated: true)
         }
-        let completionBlock:SDWebImageCompletionWithFinishedBlock! = {(image: UIImage!, error: NSError!, cacheType: SDImageCacheType, finished:Bool, url:NSURL!) -> Void in
+        task.completion {
+            let image = $0.image
             dispatch_async(dispatch_get_main_queue()) {
                 self.photoFetchState = .PhotosFetched
                 if (Utils.isPad()) {
@@ -141,9 +144,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
                 self.imageDownloadProgressView.hidden = true
                 self.doneButton.hidden = false
             }
-            
         }
-        sdWebImageManager.downloadImageWithURL(self.flickrPhoto?.bigImageUrl, options: [], progress: progressBlock, completed: completionBlock)
         var photoTitle : String = self.flickrPhoto!.title!
         if photoTitle.isEmpty {
             photoTitle = FlickrConstants.TITLE_NOT_AVAILABLE
