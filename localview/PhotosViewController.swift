@@ -10,8 +10,8 @@ import UIKit
 
 class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate, UIViewControllerPreviewingDelegate{
   
-    private let reuseIdentifier = "PhotoCell";
-    private let sectionInsets = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
+    fileprivate let reuseIdentifier = "PhotoCell";
+    fileprivate let sectionInsets = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
     var flickrPhotoList : [FlickrPhoto] = []
     var photoListManager:PhotoListManager!
     var photoLoadViewController:PhotoLoadViewController!
@@ -25,41 +25,41 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         super.viewDidLoad()
         collectionView!.alwaysBounceVertical = true
         if #available(iOS 9.0, *) {
-            if( traitCollection.forceTouchCapability == .Available){
+            if( traitCollection.forceTouchCapability == .available){
                 
-                registerForPreviewingWithDelegate(self, sourceView: view)
+                registerForPreviewing(with: self, sourceView: view)
                 
             }
         } else {
             // Fallback on earlier versions
         }
 
-        self.photoFetchState = .PhotoListNotFetched
-        let storyboard = UIStoryboard(name: "Main", bundle: NSBundle(forClass: self.dynamicType))
-        self.photoLoadViewController = storyboard.instantiateViewControllerWithIdentifier("PhotoLoadViewController") as! PhotoLoadViewController
+        self.photoFetchState = .photoListNotFetched
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: type(of: self)))
+        self.photoLoadViewController = storyboard.instantiateViewController(withIdentifier: "PhotoLoadViewController") as! PhotoLoadViewController
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl!.tintColor = UIColor.grayColor()
-        self.refreshControl!.addTarget(self, action: #selector(PhotosViewController.refresh), forControlEvents: .ValueChanged)
+        self.refreshControl!.tintColor = UIColor.gray
+        self.refreshControl!.addTarget(self, action: #selector(PhotosViewController.refresh), for: .valueChanged)
         collectionView!.addSubview(self.refreshControl!)
         collectionView!.alwaysBounceVertical = true
 
 
     }
     
-    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
     }
     
-    override func viewDidAppear(animated: Bool) {
-        if (self.photoFetchState == .PhotoListNotFetched) {
+    override func viewDidAppear(_ animated: Bool) {
+        if (self.photoFetchState == .photoListNotFetched) {
             self.startPhotoListManager()
         }
     }
     
     func refresh() {
-        self.photoFetchState = .PhotoListNotFetched
-        self.collectionView?.hidden = true
+        self.photoFetchState = .photoListNotFetched
+        self.collectionView?.isHidden = true
         self.startPhotoListManager()
     }
 
@@ -68,31 +68,36 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         // Dispose of any resources that can be recreated.
     }
   
-    func photoForIndexPath(indexPath: NSIndexPath) -> FlickrPhoto {
-        return flickrPhotoList[indexPath.row]
+    func photoForIndexPath(_ indexPath: IndexPath) -> FlickrPhoto {
+        return flickrPhotoList[(indexPath as NSIndexPath).row]
+    }
+    
+    func photoForPhotoSetId(_ photoSetId : Int) -> FlickrPhoto {
+        let foundValue : FlickrPhoto = flickrPhotoList.index { $0.photoSetId == String(photoSetId) }.map { flickrPhotoList[$0] }!
+        return foundValue
     }
     
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
 
 
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.flickrPhotoList.count
     }
     
-    override func collectionView(collectionView: UICollectionView,
+    override func collectionView(_ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
-        atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+        at indexPath: IndexPath) -> UICollectionReusableView {
             switch kind {
             case UICollectionElementKindSectionHeader:
                 let headerView =
-                collectionView.dequeueReusableSupplementaryViewOfKind(kind,
+                collectionView.dequeueReusableSupplementaryView(ofKind: kind,
                     withReuseIdentifier: "PhotosHeaderView",
-                    forIndexPath: indexPath)
+                    for: indexPath)
                     as! PhotosHeaderView
                 if let currentPlacemark = self.photoListManager?.currentPlacemark {
                     headerView.locationLabel.text = currentPlacemark
@@ -103,39 +108,41 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
             }
     }
 
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(self.reuseIdentifier, forIndexPath: indexPath) as! PhotoCell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! PhotoCell
         let flickrPhoto = photoForIndexPath(indexPath)
+        cell.tag = Int(flickrPhoto.photoSetId!)!
+        print(cell.tag)
         let previewImageLayer = cell.smallImageView.layer
         Utils.setupRoundedCornersForLayer(previewImageLayer)
         let placeholder:UIImage = UIImage(named: "placeholder")!
-        cell.smallImageView?.sd_setImageWithURL(flickrPhoto.smallImageUrl!, placeholderImage: placeholder)
-        cell.backgroundColor = UIColor.blackColor()
+        cell.smallImageView?.sd_setImage(with: flickrPhoto.smallImageUrl! as URL, placeholderImage: placeholder)
+        cell.backgroundColor = UIColor.black
     
     
         return cell
     }
     
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as! PhotoCell
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
+        let cell = collectionView.cellForItem(at: indexPath) as! PhotoCell
         self.selectedImage = cell.smallImageView
-        let photoFullScreenViewController = storyboard!.instantiateViewControllerWithIdentifier("PhotoFullScreenViewController") as! PhotoFullScreenViewController
+        let photoFullScreenViewController = storyboard!.instantiateViewController(withIdentifier: "PhotoFullScreenViewController") as! PhotoFullScreenViewController
         photoFullScreenViewController.flickrPhoto = photoForIndexPath(indexPath)
         photoFullScreenViewController.transitioningDelegate = self
-        presentViewController(photoFullScreenViewController, animated: true, completion: nil)
+        present(photoFullScreenViewController, animated: true, completion: nil)
     }
     
     // MARK: - Photo List Manager
     func startPhotoListManager() {
-        self.navigationController?.presentViewController(self.photoLoadViewController, animated: true, completion: nil)
+        self.navigationController?.present(self.photoLoadViewController, animated: true, completion: nil)
         self.photoListManager = PhotoListManager()
         self.photoListManager.delegate = self
     }
     
-    func photoListManagerDidFinish(photoListManager : PhotoListManager) {
-        self.photoFetchState = .PhotoListFetched
-        self.navigationController?.dismissViewControllerAnimated(true, completion: nil)
-        self.collectionView?.hidden = false
+    func photoListManagerDidFinish(_ photoListManager : PhotoListManager) {
+        self.photoFetchState = .photoListFetched
+        self.navigationController?.dismiss(animated: true, completion: nil)
+        self.collectionView?.isHidden = false
         self.collectionView?.reloadData()
         self.refreshControl!.endRefreshing()
         if photoListManager.flickrPhotoList.count > 0 {
@@ -146,14 +153,14 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         
     }
     
-    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
         
-        guard let indexPath = self.collectionView?.indexPathForItemAtPoint(location) else { return nil }
+        guard let indexPath = self.collectionView?.indexPathForItem(at: location) else { return nil }
         
-        guard let cell = self.collectionView?.cellForItemAtIndexPath(indexPath) else { return nil }
-        guard let photoFullScreenViewController = storyboard?.instantiateViewControllerWithIdentifier("PhotoFullScreenViewController") as? PhotoFullScreenViewController else { return nil }
-        
-        let flickrPhoto = photoForIndexPath(indexPath)
+        guard let cell = self.collectionView?.cellForItem(at: indexPath) else { return nil }
+        guard let photoFullScreenViewController = storyboard?.instantiateViewController(withIdentifier: "PhotoFullScreenViewController") as? PhotoFullScreenViewController else { return nil }
+        print("peek" + String(cell.tag))
+        let flickrPhoto = photoForPhotoSetId(cell.tag)
         photoFullScreenViewController.flickrPhoto = flickrPhoto
         
         photoFullScreenViewController.preferredContentSize = CGSize(width: 0.0, height: 300)
@@ -168,9 +175,9 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         
     }
     
-    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+    func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         
-        showViewController(viewControllerToCommit, sender: self)
+        show(viewControllerToCommit, sender: self)
         
     }
 
@@ -179,33 +186,33 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
 
 
 extension PhotosViewController : UICollectionViewDelegateFlowLayout {
-    func collectionView(collectionView: UICollectionView,
+    func collectionView(_ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        sizeForItemAt indexPath: IndexPath) -> CGSize {
             return CGSize(width: 75, height: 75)
     }
     
-    func collectionView(collectionView: UICollectionView,
+    func collectionView(_ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
-        insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        insetForSectionAt section: Int) -> UIEdgeInsets {
             return sectionInsets
     }
     
 }
 
 extension PhotosViewController: UIViewControllerTransitioningDelegate {
-    func animationControllerForPresentedController(
-        presented: UIViewController,
-        presentingController presenting: UIViewController,
-        sourceController source: UIViewController) ->
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController,
+        source: UIViewController) ->
         UIViewControllerAnimatedTransitioning? {
-            transition.originFrame = selectedImage!.superview!.convertRect(selectedImage!.frame, toView: nil)
+            transition.originFrame = selectedImage!.superview!.convert(selectedImage!.frame, to: nil)
             transition.presenting = true
             
             return transition
     }
     
-    func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.presenting = false
         return transition
     }

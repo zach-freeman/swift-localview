@@ -14,23 +14,23 @@ class SplitViewTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioni
     var presenting  = true
     var originFrame = CGRect.zero
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?)-> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?)-> TimeInterval {
         return duration
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView()!
-        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
-        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let containerView = transitionContext.containerView
+        let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
+        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
         
         //get rects that represent the top and bottom halves of the screen
         let viewSize = fromViewController!.view.bounds.size
-        let topFrame = CGRectMake(0, 0, viewSize.width, viewSize.height/2);
-        let bottomFrame = CGRectMake(0, viewSize.height/2, viewSize.width, viewSize.height/2);
+        let topFrame = CGRect(x: 0, y: 0, width: viewSize.width, height: viewSize.height/2);
+        let bottomFrame = CGRect(x: 0, y: viewSize.height/2, width: viewSize.width, height: viewSize.height/2);
         
         //create snapshots
-        let snapshotTop:UIView = fromViewController!.view.resizableSnapshotViewFromRect(topFrame, afterScreenUpdates:false, withCapInsets:UIEdgeInsetsZero)
-        let snapshotBottom:UIView = fromViewController!.view.resizableSnapshotViewFromRect(bottomFrame, afterScreenUpdates:false, withCapInsets:UIEdgeInsetsZero)
+        let snapshotTop:UIView = fromViewController!.view.resizableSnapshotView(from: topFrame, afterScreenUpdates:false, withCapInsets:UIEdgeInsets.zero)!
+        let snapshotBottom:UIView = fromViewController!.view.resizableSnapshotView(from: bottomFrame, afterScreenUpdates:false, withCapInsets:UIEdgeInsets.zero)!
         snapshotTop.frame = topFrame
         snapshotBottom.frame = bottomFrame
         
@@ -44,7 +44,7 @@ class SplitViewTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioni
         containerView.addSubview(snapshotTop)
         containerView.addSubview(snapshotBottom)
         
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             //adjust the new frames
             var newTopFrame:CGRect = topFrame
             var newBottomFrame:CGRect = bottomFrame

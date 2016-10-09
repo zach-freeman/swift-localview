@@ -21,13 +21,59 @@
 //  THE SOFTWARE.
 
 import XCTest
-import SwiftyJSON
+import Foundation
+
+@testable import SwiftyJSON
 
 class RawTests: XCTestCase {
 
+// GENERATED: allTests required for Swift 3.0
+    static var allTests : [(String, (RawTests) -> () throws -> Void)] {
+        return [
+            ("testRawData", testRawData),
+            ("testInvalidJSONForRawData", testInvalidJSONForRawData),
+            ("testArray", testArray),
+            ("testDictionary", testDictionary),
+            ("testString", testString),
+            ("testNumber", testNumber),
+            ("testBool", testBool),
+            ("testNull", testNull),
+        ]
+    }
+// END OF GENERATED CODE
+
+    func testRawData() {
+        let json : JSON = ["somekey" : "some string value"]
+        let expectedRawData = "{\"somekey\":\"some string value\"}".data(using: String.Encoding.utf8)
+        do {
+            let data = try json.rawData()
+            XCTAssertEqual(expectedRawData, data)
+        } catch _ {
+            XCTFail()
+        }
+    }
+    
+    func testInvalidJSONForRawData() {
+        let json: JSON = "...<nonsense>xyz</nonsense>"
+        do {
+            _ = try json.rawData()
+            XCTFail("rawData should throw")
+        } catch let error as SwiftyJSONError {
+            switch error {
+            case .empty:
+                XCTFail("Wrong error type")
+            case .errorInvalidJSON(let message):
+                XCTAssertEqual(message, "JSON is invalid")
+            }
+        } catch {
+            XCTFail("Wrong error type")
+        }
+    }
+    
     func testArray() {
-        let json:JSON = [1, "2", 3.12, NSNull(), true, ["name": "Jack"]]
-        let data: NSData?
+        let json : JSON = [1, "2", 3.12, NSNull(), true, ["name": "Jack"]]
+        
+        let data: Data?
         do {
             data = try json.rawData()
         } catch _ {
@@ -35,13 +81,12 @@ class RawTests: XCTestCase {
         }
         let string = json.rawString()
         XCTAssertTrue (data != nil)
-        XCTAssertTrue (string!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0)
-        print(string!)
+        XCTAssertTrue (string!.lengthOfBytes(using: String.Encoding.utf8) > 0)
     }
     
     func testDictionary() {
-        let json:JSON = ["number":111111.23456789, "name":"Jack", "list":[1,2,3,4], "bool":false, "null":NSNull()]
-        let data: NSData?
+        let json : JSON = ["number":111111.23456789, "name":"Jack", "list":[1,2,3,4], "bool":false, "null":NSNull()]
+        let data: Data?
         do {
             data = try json.rawData()
         } catch _ {
@@ -49,31 +94,26 @@ class RawTests: XCTestCase {
         }
         let string = json.rawString()
         XCTAssertTrue (data != nil)
-        XCTAssertTrue (string!.lengthOfBytesUsingEncoding(NSUTF8StringEncoding) > 0)
-        print(string!)
+        XCTAssertTrue (string!.lengthOfBytes(using: String.Encoding.utf8) > 0)
     }
     
     func testString() {
         let json:JSON = "I'm a json"
-        print(json.rawString())
         XCTAssertTrue(json.rawString() == "I'm a json")
     }
     
     func testNumber() {
         let json:JSON = 123456789.123
-        print(json.rawString())
         XCTAssertTrue(json.rawString() == "123456789.123")
     }
     
     func testBool() {
         let json:JSON = true
-        print(json.rawString())
         XCTAssertTrue(json.rawString() == "true")
     }
     
     func testNull() {
         let json:JSON = nil
-        print(json.rawString())
         XCTAssertTrue(json.rawString() == "null")
     }
 }

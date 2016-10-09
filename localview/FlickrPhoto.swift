@@ -8,12 +8,12 @@
 
 import UIKit
 
-public class FlickrPhoto: NSObject {
+open class FlickrPhoto: NSObject {
   
   
   var photoSetId : String?
-  var smallImageUrl : NSURL?
-  var bigImageUrl : NSURL?
+  var smallImageUrl : URL?
+  var bigImageUrl : URL?
   var title : String?
   
 }

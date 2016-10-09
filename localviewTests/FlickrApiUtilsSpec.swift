@@ -6,18 +6,18 @@ class FlickrApiUtilsSpec: QuickSpec {
     override func spec() {
         var flickrResponseJson:JSON = nil
         var flickrPhotos:[FlickrPhoto] = []
-        var flickrResponse: NSData = NSData()
+        var flickrResponse: Data = Data()
         let expectedFlickrPhoto:FlickrPhoto = FlickrPhoto()
         
         describe("setupPhotoListWithJSON") {
             context("when the json is good") {
                 beforeEach {
                     flickrResponse = LocalViewTestsHelpers.bundleFileContentsAsData("good-flickr-response", filetype: "json")
-                    flickrResponseJson = LocalViewTestsHelpers.fileContentsAsJson(flickrResponse)
+                    flickrResponseJson = LocalViewTestsHelpers.fileContentsAsJson(flickrResponse as NSData)
                     flickrPhotos = FlickrApiUtils.setupPhotoListWithJSON(flickrResponseJson)
                     expectedFlickrPhoto.photoSetId = "21619543780"
-                    expectedFlickrPhoto.smallImageUrl = NSURL(string: "https://static.flickr.com/5730/21619543780_9263e389bc_s.jpg")
-                    expectedFlickrPhoto.bigImageUrl = NSURL(string: "https://static.flickr.com/5730/21619543780_9263e389bc_b.jpg")
+                    expectedFlickrPhoto.smallImageUrl = NSURL(string: "https://static.flickr.com/5730/21619543780_9263e389bc_s.jpg") as URL?
+                    expectedFlickrPhoto.bigImageUrl = NSURL(string: "https://static.flickr.com/5730/21619543780_9263e389bc_b.jpg") as URL?
                     expectedFlickrPhoto.title = "FabLearn 0"
                 }
                 
@@ -36,7 +36,7 @@ class FlickrApiUtilsSpec: QuickSpec {
             context("when the json is bad") {
                 beforeEach {
                     flickrResponse = LocalViewTestsHelpers.bundleFileContentsAsData("bad-flickr-response", filetype: "json")
-                    flickrResponseJson = LocalViewTestsHelpers.fileContentsAsJson(flickrResponse)
+                    flickrResponseJson = LocalViewTestsHelpers.fileContentsAsJson(flickrResponse as NSData)
                     flickrPhotos = FlickrApiUtils.setupPhotoListWithJSON(flickrResponseJson)
                 }
                 
@@ -52,7 +52,7 @@ class FlickrApiUtilsSpec: QuickSpec {
                 let expectedUrl = NSURL(string: expectedUrlString)
                 var photoUrl: NSURL = NSURL(string: "")!
                 beforeEach {
-                    photoUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.SMALL_IMAGE_SIZE, photoId: "1418878", server: "2", secret: "1e9228336", farm: "1")
+                    photoUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.SMALL_IMAGE_SIZE, photoId: "1418878", server: "2", secret: "1e9228336", farm: "1") as NSURL
                 }
                 
                 it("should be correct url") {
@@ -65,7 +65,7 @@ class FlickrApiUtilsSpec: QuickSpec {
                 let expectedUrl = NSURL(string: expectedUrlString)
                 var photoUrl: NSURL = NSURL(string: "")!
                 beforeEach {
-                    photoUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.BIG_IMAGE_SIZE, photoId: "1418878", server: "2", secret: "1e9228336", farm: "1")
+                    photoUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.BIG_IMAGE_SIZE, photoId: "1418878", server: "2", secret: "1e9228336", farm: "1") as NSURL
                 }
                 
                 it("should be correct url") {
@@ -76,7 +76,7 @@ class FlickrApiUtilsSpec: QuickSpec {
         
         describe("the suffix for size method") {
             it("is returning the proper string for size") {
-                let suffix = FlickrApiUtils.suffixForSize(FlickrApiUtils.FlickrPhotoSize.PhotoSizeCollectionIconLarge)
+                let suffix = FlickrApiUtils.suffixForSize(FlickrApiUtils.FlickrPhotoSize.photoSizeCollectionIconLarge)
                 expect(suffix).to(equal("collectionIconLarge"))
             }
         }

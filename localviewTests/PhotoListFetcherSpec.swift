@@ -1,27 +1,30 @@
 import Quick
 import Nimble
 import Swinject
-
+@testable import localview
 class PhotoListFetcherSpec: QuickSpec {
 
     override func spec() {
-        var networkAccessQueue:NSOperationQueue {
-            let queue = NSOperationQueue()
+        var networkAccessQueue:OperationQueue {
+            let queue = OperationQueue()
             queue.name = "NetworkAccessQueue"
             queue.maxConcurrentOperationCount = 1
             return queue
         }
-        var container: Container!
+        let container: Container = Container()
         var fetcher: PhotoListFetcher!
+        var mockNetwork : MockNetwork = MockNetwork()
+        var mockPhotoListFetcherDelegate : MockPhotoListFetcherDelegate = MockPhotoListFetcherDelegate()
         beforeEach {
-            container = Container()
-            container.register(Networking.self) { _ in MockNetwork() }
-                .inObjectScope(.Container)
+            container.register(Networking.self) { _ in mockNetwork }
             container.register(PhotoListFetcher.self) { r in
                 PhotoListFetcher.init(currentLatitude: "test", currentLongitude: "test", currentNetwork: r.resolve(Networking.self)!)
             }
-            container.register(PhotoListFetcherDelegate.self) { _ in MockPhotoListFetcherDelegate() }
-                .inObjectScope(.Container)
+                .initCompleted { r, c in
+                    let thefetch = c as PhotoListFetcher!
+                    thefetch?.network = r.resolve(Networking.self)!
+            }
+            container.register(PhotoListFetcherDelegate.self) { _ in mockPhotoListFetcherDelegate }
             fetcher = container.resolve(PhotoListFetcher.self)!
             fetcher.delegate = container.resolve(PhotoListFetcherDelegate.self)
             networkAccessQueue.addOperation(fetcher)
@@ -42,6 +45,11 @@ class PhotoListFetcherSpec: QuickSpec {
         it("calls the delegate") {
             let delegate = container.resolve(PhotoListFetcherDelegate.self) as! MockPhotoListFetcherDelegate
             expect(delegate.delegateCallCount).toEventually(equal(1))
+        }
+        
+        afterEach {
+            mockNetwork = MockNetwork()
+            mockPhotoListFetcherDelegate = MockPhotoListFetcherDelegate()
         }
         
     }

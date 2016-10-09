@@ -11,15 +11,15 @@ import Alamofire
 import SwiftyJSON
 
 protocol PhotoListFetcherDelegate {
-    func photoListFetcherDidFinish(photoListFetcher : PhotoListFetcher)
+    func photoListFetcherDidFinish(_ photoListFetcher : PhotoListFetcher)
 }
 
-class PhotoListFetcher: NSOperation {
+class PhotoListFetcher: Operation {
     var delegate : PhotoListFetcherDelegate?
     var flickrPhotos : [FlickrPhoto] = []
     var currentLatitude : String!
     var currentLongitude : String!
-    let network: Networking
+    var network: Networking!
     
     init(currentLatitude : String, currentLongitude: String, currentNetwork: Networking) {
         self.currentLatitude = currentLatitude
@@ -28,13 +28,13 @@ class PhotoListFetcher: NSOperation {
     }
     
     override func main() {
-        if self.cancelled {
+        if self.isCancelled {
             return
         }
         self.network.request(self.currentLatitude, longitude: self.currentLongitude) { response in
-            let responseJson:JSON = JSON(response!)
+            let responseJson:JSON = JSON(response)
             self.flickrPhotos = FlickrApiUtils.setupPhotoListWithJSON(responseJson)
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.delegate?.photoListFetcherDidFinish(self)
                 
             })

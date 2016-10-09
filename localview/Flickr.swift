@@ -12,15 +12,15 @@ struct Flickr {
     
     static let url = FlickrConstants.FLICKR_URL
     
-    static func parameters(latitude: String, longitude: String) -> [String: AnyObject] {
-        return ["method": FlickrConstants.SEARCH_METHOD,
-            "api_key": FlickrConstants.FLICKR_KEY,
-            "lat": latitude,
-            "lon": longitude,
-            "per_page": FlickrConstants.NUMBER_OF_PHOTOS,
-            "format": FlickrConstants.FORMAT_TYPE,
-            "privacy_filter": FlickrConstants.PRIVACY_FILTER,
-            "nojsoncallback": FlickrConstants.JSON_CALLBACK]
+    static func parameters(_ latitude: String, longitude: String) -> [String: AnyObject] {
+        return ["method": FlickrConstants.SEARCH_METHOD as AnyObject,
+            "api_key": FlickrConstants.FLICKR_KEY as AnyObject,
+            "lat": latitude as AnyObject,
+            "lon": longitude as AnyObject,
+            "per_page": FlickrConstants.NUMBER_OF_PHOTOS as AnyObject,
+            "format": FlickrConstants.FORMAT_TYPE as AnyObject,
+            "privacy_filter": FlickrConstants.PRIVACY_FILTER as AnyObject,
+            "nojsoncallback": FlickrConstants.JSON_CALLBACK as AnyObject]
     }
     
 }

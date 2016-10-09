@@ -9,52 +9,55 @@
 import UIKit
 import SwiftyJSON
 
-public class FlickrApiUtils {
+open class FlickrApiUtils {
     
     public enum PhotoFetchState: Int {
-        case PhotoListNotFetched
-        case PhotoListFetched
-        case PhotosNotFetched
-        case PhotosFetched
+        case photoListNotFetched
+        case photoListFetched
+        case photosNotFetched
+        case photosFetched
     }
     
     public enum FlickrPhotoSize: Int {
-        case PhotoSizeUnknown
-        case PhotoSizeCollectionIconLarge
-        case PhotoSizeBuddyIcon
-        case PhotoSizeSmallSquare75
-        case PhotoSizeLargeSquare150
-        case PhotoSizeThumbnail100
-        case PhotoSizeSmall240
-        case PhotoSizeSmall320
-        case PhotoSizeMedium500
-        case PhotoSizeMedium640
-        case PhotoSizeMedium800
-        case PhotoSizeLarge1024
-        case PhotoSizeLarge1600
-        case PhotoSizeLarge2048
-        case PhotoSizeOriginal
-        case PhotoSizeVideoOriginal
-        case PhotoSizeVideoHDMP4
-        case PhotoSizeVideoSiteMP4
-        case PhotoSizeVideoMobileMP4
-        case PhotoSizeVideoPlayer
+        case photoSizeUnknown
+        case photoSizeCollectionIconLarge
+        case photoSizeBuddyIcon
+        case photoSizeSmallSquare75
+        case photoSizeLargeSquare150
+        case photoSizeThumbnail100
+        case photoSizeSmall240
+        case photoSizeSmall320
+        case photoSizeMedium500
+        case photoSizeMedium640
+        case photoSizeMedium800
+        case photoSizeLarge1024
+        case photoSizeLarge1600
+        case photoSizeLarge2048
+        case photoSizeOriginal
+        case photoSizeVideoOriginal
+        case photoSizeVideoHDMP4
+        case photoSizeVideoSiteMP4
+        case photoSizeVideoMobileMP4
+        case photoSizeVideoPlayer
     }
     
-    class func setupPhotoListWithJSON(json: JSON) -> [FlickrPhoto] {
+    class func setupPhotoListWithJSON(_ json: JSON) -> [FlickrPhoto] {
         var flickrPhotos:[FlickrPhoto] = []
-        for (_, flickrPhotoDictionary) in json["photos"]["photo"] {
-            let flickrPhoto : FlickrPhoto = FlickrPhoto()
-            flickrPhoto.title = flickrPhotoDictionary["title"].string
-            flickrPhoto.bigImageUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.BIG_IMAGE_SIZE, photoDictionary: flickrPhotoDictionary)
-            flickrPhoto.smallImageUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.SMALL_IMAGE_SIZE, photoDictionary: flickrPhotoDictionary)
-            flickrPhoto.photoSetId = flickrPhotoDictionary["id"].string
-            flickrPhotos.append(flickrPhoto)
+        let thePhotoArray : JSON! = json["photos"]["photo"]
+        if thePhotoArray.count > 0 {
+            for (_, flickrPhotoDictionary) in thePhotoArray {
+                let flickrPhoto : FlickrPhoto = FlickrPhoto()
+                flickrPhoto.title = flickrPhotoDictionary["title"].string
+                flickrPhoto.bigImageUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.BIG_IMAGE_SIZE, photoDictionary: flickrPhotoDictionary)
+                flickrPhoto.smallImageUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.SMALL_IMAGE_SIZE, photoDictionary: flickrPhotoDictionary)
+                flickrPhoto.photoSetId = flickrPhotoDictionary["id"].string
+                flickrPhotos.append(flickrPhoto)
+            }
         }
         return flickrPhotos
     }
     
-    class func photoUrlForSize(size: FlickrPhotoSize, photoDictionary: JSON!) -> NSURL {
+    class func photoUrlForSize(_ size: FlickrPhotoSize, photoDictionary: JSON!) -> URL {
         let photoId = photoDictionary["id"].string!
         let server = photoDictionary["server"].string!
         
@@ -65,7 +68,7 @@ public class FlickrApiUtils {
         return photoUrl
     }
     
-    class func photoUrlForSize(size: FlickrPhotoSize, photoId : String, server: String, secret: String, farm: String?) -> NSURL {
+    class func photoUrlForSize(_ size: FlickrPhotoSize, photoId : String, server: String, secret: String, farm: String?) -> URL {
         // https://farm{farm-id}.static.flickr.com/{server-id}/{id}_{secret}_[mstb].jpg
         // https://farm{farm-id}.static.flickr.com/{server-id}/{id}_{secret}.jpg
         var photoUrlString = "https://"
@@ -77,10 +80,10 @@ public class FlickrApiUtils {
         assert(secret.characters.count > 0, "Secret attribute is required")
         assert(photoId.characters.count > 0, "Id attribute is required")
         photoUrlString += FlickrConstants.FLICKR_PHOTO_SOURCE_HOST + "/\(server)/\(photoId)_\(secret)_\(sizeSuffix).jpg"
-        return NSURL(string: photoUrlString)!
+        return URL(string: photoUrlString)!
     }
     
-    class func suffixForSize(size: FlickrPhotoSize) -> String {
+    class func suffixForSize(_ size: FlickrPhotoSize) -> String {
         let suffixArray : [String] = ["",
             "collectionIconLarge",
             "buddyIcon",

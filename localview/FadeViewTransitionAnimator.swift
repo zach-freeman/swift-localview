@@ -14,20 +14,20 @@ class FadeViewTransitionAnimator: NSObject, UIViewControllerAnimatedTransitionin
     var presenting  = true
     var originFrame = CGRect.zero
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?)-> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?)-> TimeInterval {
         return duration
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         //fade the new view in
-        let containerView = transitionContext.containerView()!
-        let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
-        let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
+        let containerView = transitionContext.containerView
+        let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)
+        let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)
         
         toViewController!.view.alpha = 0.0
         containerView.addSubview(toViewController!.view)
         
-        UIView.animateWithDuration(duration, animations: {
+        UIView.animate(withDuration: duration, animations: {
             if (!self.presenting) {
                 // account for case where user rotates device after transition occurred
                 toViewController!.view.frame = fromViewController!.view.frame

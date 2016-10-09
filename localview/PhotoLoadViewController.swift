@@ -19,17 +19,17 @@ class PhotoLoadViewController: UIViewController {
 
   }
   
-  override func viewDidAppear(animated: Bool) {
+  override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     Utils.showNetworkActivityIndicator()
-    dispatch_async(dispatch_get_main_queue()) {
+    DispatchQueue.main.async {
       self.loadingActivityIndicator.startAnimating()
     }
   }
   
-  override func viewDidDisappear(animated: Bool) {
+  override func viewDidDisappear(_ animated: Bool) {
     Utils.hideNetworkActivityIndicator()
-    dispatch_async(dispatch_get_main_queue()) {
+    DispatchQueue.main.async {
       self.loadingActivityIndicator.stopAnimating()
     }
   }
