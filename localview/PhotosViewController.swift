@@ -112,7 +112,6 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! PhotoCell
         let flickrPhoto = photoForIndexPath(indexPath)
         cell.tag = Int(flickrPhoto.photoSetId!)!
-        print(cell.tag)
         let previewImageLayer = cell.smallImageView.layer
         Utils.setupRoundedCornersForLayer(previewImageLayer)
         let placeholder:UIImage = UIImage(named: "placeholder")!
@@ -163,7 +162,6 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         
         guard let cell = self.collectionView?.cellForItem(at: indexPath) else { return nil }
         guard let photoFullScreenViewController = storyboard?.instantiateViewController(withIdentifier: "PhotoFullScreenViewController") as? PhotoFullScreenViewController else { return nil }
-        print("peek" + String(cell.tag))
         let flickrPhoto = photoForPhotoSetId(cell.tag)
         photoFullScreenViewController.flickrPhoto = flickrPhoto
         
