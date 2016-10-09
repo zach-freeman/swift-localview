@@ -139,18 +139,22 @@ class PhotosViewController: UICollectionViewController, PhotoListManagerDelegate
         self.photoListManager.delegate = self
     }
     
-    func photoListManagerDidFinish(_ photoListManager : PhotoListManager) {
-        self.photoFetchState = .photoListFetched
-        self.navigationController?.dismiss(animated: true, completion: nil)
-        self.collectionView?.isHidden = false
-        self.collectionView?.reloadData()
-        self.refreshControl!.endRefreshing()
-        if photoListManager.flickrPhotoList.count > 0 {
-            self.flickrPhotoList = photoListManager.flickrPhotoList
+    func photoListManagerDidFinish(_ photoListManager : PhotoListManager, alert: UIAlertController?) {
+        if alert == nil {
+            self.photoFetchState = .photoListFetched
+            self.navigationController?.dismiss(animated: true, completion: nil)
+            self.collectionView?.isHidden = false
+            self.collectionView?.reloadData()
+            self.refreshControl!.endRefreshing()
+            if photoListManager.flickrPhotoList.count > 0 {
+                self.flickrPhotoList = photoListManager.flickrPhotoList
+            } else {
+                let alert : UIAlertController = Utils.buildAlert("Error", message: "No photos retrieved. Is your Flickr key correct?")
+                self.present(alert, animated: true)
+            }
         } else {
-            Utils.showAlert("Error", message: "No photos retrieved. Is your Flickr key correct?")
+            self.present(alert!, animated: true)
         }
-        
     }
     
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {

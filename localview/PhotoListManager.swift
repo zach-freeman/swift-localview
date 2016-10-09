@@ -9,7 +9,7 @@
 import Foundation
 
 protocol PhotoListManagerDelegate {
-  func photoListManagerDidFinish(_ photoListManager : PhotoListManager)
+    func photoListManagerDidFinish(_ photoListManager : PhotoListManager, alert : UIAlertController?)
 }
 
 class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,PhotoListFetcherDelegate {
@@ -42,9 +42,9 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
   func networkStatusDidFinish(_ networkStatus: NetworkStatus) {
     self.networkAccessQueue.cancelAllOperations()
     if networkStatus.isReachable == false {
-      Utils.showReachabilityAlert()
+      let reachabilityAlert = Utils.buildReachabilityAlert()
       DispatchQueue.main.async(execute: {
-        self.delegate?.photoListManagerDidFinish(self)
+        self.delegate?.photoListManagerDidFinish(self, alert: reachabilityAlert)
       })
     } else if networkStatus.isReachable == true {
       self.startLocationUpdater()
@@ -77,7 +77,7 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
     self.networkAccessQueue.cancelAllOperations()
     self.flickrPhotoList = photoListFetcher.flickrPhotos
     DispatchQueue.main.async(execute: {
-        self.delegate?.photoListManagerDidFinish(self)
+        self.delegate?.photoListManagerDidFinish(self, alert : nil)
     })
     
   }

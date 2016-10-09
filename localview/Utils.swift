@@ -34,16 +34,17 @@ class Utils: NSObject {
         }
     }
     
-    class func showReachabilityAlert() {
-        showAlert("Error", message: "Unable to load photos. Please connect to a network")
+    class func buildReachabilityAlert() -> UIAlertController {
+        let reachabilityAlert = buildAlert("Error", message: "Unable to load photos. Please connect to a network")
+        return reachabilityAlert
     }
     
-    class func showAlert(_ title: String, message: String) {
-        let alert = UIAlertView()
-        alert.title = title
-        alert.message = message
-        alert.addButton(withTitle: "OK")
-        alert.show()
+    class func buildAlert(_ title: String, message: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(OKAction)
+        return alert
+        
     }
     
     
