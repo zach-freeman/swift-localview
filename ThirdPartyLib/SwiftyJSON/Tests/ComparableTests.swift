@@ -21,9 +21,39 @@
 //  THE SOFTWARE.
 
 import XCTest
-import SwiftyJSON
+import Foundation
+
+@testable import SwiftyJSON
 
 class ComparableTests: XCTestCase {
+
+// GENERATED: allTests required for Swift 3.0
+    static var allTests : [(String, (ComparableTests) -> () throws -> Void)] {
+        return [
+            ("testNumberEqual", testNumberEqual),
+            ("testNumberNotEqual", testNumberNotEqual),
+            ("testNumberGreaterThanOrEqual", testNumberGreaterThanOrEqual),
+            ("testNumberLessThanOrEqual", testNumberLessThanOrEqual),
+            ("testNumberGreaterThan", testNumberGreaterThan),
+            ("testNumberLessThan", testNumberLessThan),
+            ("testBoolEqual", testBoolEqual),
+            ("testBoolNotEqual", testBoolNotEqual),
+            ("testBoolGreaterThanOrEqual", testBoolGreaterThanOrEqual),
+            ("testBoolLessThanOrEqual", testBoolLessThanOrEqual),
+            ("testBoolGreaterThan", testBoolGreaterThan),
+            ("testBoolLessThan", testBoolLessThan),
+            ("testStringEqual", testStringEqual),
+            ("testStringNotEqual", testStringNotEqual),
+            ("testStringGreaterThanOrEqual", testStringGreaterThanOrEqual),
+            ("testStringLessThanOrEqual", testStringLessThanOrEqual),
+            ("testStringGreaterThan", testStringGreaterThan),
+            ("testStringLessThan", testStringLessThan),
+            ("testNil", testNil),
+            ("testArray", testArray),
+            ("testDictionary", testDictionary),
+        ]
+    }
+// END OF GENERATED CODE
 
     func testNumberEqual() {
         let jsonL1:JSON = 1234567890.876623
@@ -37,8 +67,8 @@ class ComparableTests: XCTestCase {
         XCTAssertTrue(jsonR2 == 987654321)
 
         
-        let jsonL3:JSON = JSON(NSNumber(double:87654321.12345678))
-        let jsonR3:JSON = JSON(NSNumber(double:87654321.12345678))
+        let jsonL3:JSON = JSON(NSNumber(value:87654321.12345678))
+        let jsonR3:JSON = JSON(NSNumber(value:87654321.12345678))
         XCTAssertEqual(jsonL3, jsonR3)
         XCTAssertTrue(jsonR3 == 87654321.12345678)
     }
@@ -54,8 +84,8 @@ class ComparableTests: XCTestCase {
         XCTAssertNotEqual(jsonL2, jsonR2)
         XCTAssertFalse(jsonR1 == 454352)
         
-        let jsonL3:JSON = JSON(NSNumber(double:87621.12345678))
-        let jsonR3:JSON = JSON(NSNumber(double:87654321.45678))
+        let jsonL3:JSON = JSON(NSNumber(value:87621.12345678))
+        let jsonR3:JSON = JSON(NSNumber(value:87654321.45678))
         XCTAssertNotEqual(jsonL3, jsonR3)
         XCTAssertFalse(jsonL3 == 4545.232)
     }
@@ -71,8 +101,8 @@ class ComparableTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(jsonL2, jsonR2)
         XCTAssertTrue(jsonR2 >= -988343)
 
-        let jsonL3:JSON = JSON(NSNumber(double:87621.12345678))
-        let jsonR3:JSON = JSON(NSNumber(double:87621.12345678))
+        let jsonL3:JSON = JSON(NSNumber(value:87621.12345678))
+        let jsonR3:JSON = JSON(NSNumber(value:87621.12345678))
         XCTAssertGreaterThanOrEqual(jsonL3, jsonR3)
         XCTAssertTrue(jsonR3 >= 0.3232)
     }
@@ -88,8 +118,8 @@ class ComparableTests: XCTestCase {
         XCTAssertLessThanOrEqual(jsonR2, jsonL2)
         XCTAssertFalse(9348343 <= jsonR2)
         
-        let jsonL3:JSON = JSON(NSNumber(double:87621.12345678))
-        let jsonR3:JSON = JSON(NSNumber(double:87621.12345678))
+        let jsonL3:JSON = JSON(NSNumber(value:87621.12345678))
+        let jsonR3:JSON = JSON(NSNumber(value:87621.12345678))
         XCTAssertLessThanOrEqual(jsonR3, jsonL3)
         XCTAssertTrue(87621.12345678 <= jsonR3)
     }
@@ -105,8 +135,8 @@ class ComparableTests: XCTestCase {
         XCTAssertGreaterThan(jsonL2, jsonR2)
         XCTAssertFalse(jsonR2 > 877434)
 
-        let jsonL3:JSON = JSON(NSNumber(double:87621.12345678))
-        let jsonR3:JSON = JSON(NSNumber(double:87621.1234567))
+        let jsonL3:JSON = JSON(NSNumber(value:87621.12345678))
+        let jsonR3:JSON = JSON(NSNumber(value:87621.1234567))
         XCTAssertGreaterThan(jsonL3, jsonR3)
         XCTAssertFalse(-7799 > jsonR3)
     }
@@ -122,8 +152,8 @@ class ComparableTests: XCTestCase {
         XCTAssertLessThan(jsonR2, jsonL2)
         XCTAssertTrue(jsonR2 < 877434)
         
-        let jsonL3:JSON = JSON(NSNumber(double:87621.12345678))
-        let jsonR3:JSON = JSON(NSNumber(double:87621.1234567))
+        let jsonL3:JSON = JSON(NSNumber(value:87621.12345678))
+        let jsonR3:JSON = JSON(NSNumber(value:87621.1234567))
         XCTAssertLessThan(jsonR3, jsonL3)
         XCTAssertTrue(-7799 < jsonR3)
     }
@@ -323,8 +353,10 @@ class ComparableTests: XCTestCase {
     }
     
     func testDictionary() {
-        let jsonL1:JSON = ["2": 2, "name": "Jack", "List": ["a", 1.09, NSNull()]]
-        let jsonR1:JSON = JSON(["2": 2, "name": "Jack", "List": ["a", 1.09, NSNull()]])
+        let list: [Any] = ["a", 1.09, NSNull()]
+
+        let jsonL1:JSON = ["2": 2, "name": "Jack", "List": list]
+        let jsonR1:JSON = JSON(["2": 2, "name": "Jack", "List": list] as [String: Any])
         
         XCTAssertEqual(jsonL1, jsonR1)
         XCTAssertTrue(jsonL1 != ["1":2,"Hello":"World","Koo":"Foo"])

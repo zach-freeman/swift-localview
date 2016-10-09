@@ -11,7 +11,7 @@ import MapKit
 import CoreLocation
 
 protocol LocationUpdaterDelegate {
-  func locationAvailable(locationUpdater: LocationUpdater)
+  func locationAvailable(_ locationUpdater: LocationUpdater)
 }
 
 class LocationUpdater : NSObject, CLLocationManagerDelegate {
@@ -27,8 +27,8 @@ class LocationUpdater : NSObject, CLLocationManagerDelegate {
     self.locationManager.delegate = self
     self.shouldUpdateLocation = true
     self.locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-    if NSProcessInfo().isOperatingSystemAtLeastVersion(NSOperatingSystemVersion(majorVersion: 8, minorVersion: 0, patchVersion: 0)) &&
-      CLLocationManager.authorizationStatus() != CLAuthorizationStatus.AuthorizedWhenInUse {
+    if ProcessInfo().isOperatingSystemAtLeast(OperatingSystemVersion(majorVersion: 8, minorVersion: 0, patchVersion: 0)) &&
+      CLLocationManager.authorizationStatus() != CLAuthorizationStatus.authorizedWhenInUse {
         self.locationManager.requestWhenInUseAuthorization()
     } else {
       self.locationManager.startUpdatingLocation()
@@ -36,16 +36,16 @@ class LocationUpdater : NSObject, CLLocationManagerDelegate {
     
   }
   
-  func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+  func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
     switch status {
-    case .NotDetermined:
+    case .notDetermined:
       print("authorization not determined")
       self.locationManager.requestWhenInUseAuthorization()
       break
-    case .Denied:
+    case .denied:
       print("Authorization Denied")
       break
-    case .AuthorizedWhenInUse, .AuthorizedAlways:
+    case .authorizedWhenInUse, .authorizedAlways:
       self.locationManager.startUpdatingLocation()
       break;
     default:
@@ -54,7 +54,7 @@ class LocationUpdater : NSObject, CLLocationManagerDelegate {
     
   }
     
-  func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
  
     if self.shouldUpdateLocation == true {
       if let location = locations.last {
@@ -67,13 +67,13 @@ class LocationUpdater : NSObject, CLLocationManagerDelegate {
     }
   }
     
-    func geocodeLocation(location: CLLocation) {
+    func geocodeLocation(_ location: CLLocation) {
         let geocoder:CLGeocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location, completionHandler: {(placemarks, error)-> Void in
             if error == nil && placemarks!.count > 0 {
                 if let firstPlacemark = placemarks?[0] {
                     self.currentPlacemark = self.formatPlacemark(firstPlacemark)
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.locationUpdaterDelegate?.locationAvailable(self)
                     })
                 }
@@ -84,9 +84,9 @@ class LocationUpdater : NSObject, CLLocationManagerDelegate {
         
     }
     
-    func formatPlacemark(placemark: CLPlacemark) -> String {
+    func formatPlacemark(_ placemark: CLPlacemark) -> String {
         var formattedPlacemark:String
-        if (placemark.ISOcountryCode == "US") {
+        if (placemark.isoCountryCode == "US") {
             formattedPlacemark = placemark.locality! + ", " + placemark.administrativeArea! + ", " + placemark.country!
         } else {
             formattedPlacemark = placemark.locality! + ", " + placemark.country!

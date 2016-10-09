@@ -23,11 +23,11 @@ class PhotosViewControllerSpec: QuickSpec {
             subjectViewController.photoFetchState = fakePhotoFetchState
             
             let storyboard = UIStoryboard(name: "Main",
-                bundle: NSBundle(forClass: self.dynamicType))
+                bundle: Bundle(for: type(of: self)))
             let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
             subjectViewController = navigationController.topViewController as! PhotosViewController
             
-            UIApplication.sharedApplication().keyWindow!.rootViewController = navigationController
+            UIApplication.shared.keyWindow!.rootViewController = navigationController
             let _ = navigationController.view
             let _ = subjectViewController.view
             subjectViewController.loadView()
@@ -36,7 +36,7 @@ class PhotosViewControllerSpec: QuickSpec {
         
         describe("viewDidLoad") {
             beforeEach {
-                expectedPhotoFetchState = FlickrApiUtils.PhotoFetchState.PhotoListNotFetched
+                expectedPhotoFetchState = FlickrApiUtils.PhotoFetchState.photoListNotFetched
                 subjectViewController.viewDidLoad()
             }
             it("should set PhotoFetchState to PhotoListNotFetched") {
@@ -51,7 +51,7 @@ class PhotosViewControllerSpec: QuickSpec {
             
             context("when PhotoFetchState is PhotoListNotFetched") {
                 beforeEach {
-                    subjectViewController.photoFetchState = FlickrApiUtils.PhotoFetchState.PhotoListNotFetched
+                    subjectViewController.photoFetchState = FlickrApiUtils.PhotoFetchState.photoListNotFetched
                 }
                 it("should initialize the photoListManager") {
                     expect(subjectViewController.photoListManager).toNot(beNil())
@@ -61,7 +61,7 @@ class PhotosViewControllerSpec: QuickSpec {
             context("when PhotoFetchState is PhotoListFetched") {
                 beforeEach {
                     subjectViewController.photoListManager = nil
-                    fakePhotoFetchState = FlickrApiUtils.PhotoFetchState.PhotoListNotFetched
+                    fakePhotoFetchState = FlickrApiUtils.PhotoFetchState.photoListNotFetched
                     subjectViewController.photoFetchState = fakePhotoFetchState
                 }
                 
@@ -77,13 +77,13 @@ class PhotosViewControllerSpec: QuickSpec {
         
         describe("refresh") {
             beforeEach {
-                subjectViewController.photoFetchState = FlickrApiUtils.PhotoFetchState.PhotoListFetched
-                expectedPhotoFetchState = FlickrApiUtils.PhotoFetchState.PhotoListNotFetched
+                subjectViewController.photoFetchState = FlickrApiUtils.PhotoFetchState.photoListFetched
+                expectedPhotoFetchState = FlickrApiUtils.PhotoFetchState.photoListNotFetched
                 subjectViewController.refresh()
             }
             
             it("should hide the collection view") {
-                expect(subjectViewController.collectionView?.hidden).to(beTruthy())
+                expect(subjectViewController.collectionView?.isHidden).to(beTruthy())
             }
             
             it("should set the photo state to PhotoListNotFetched") {

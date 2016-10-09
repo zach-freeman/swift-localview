@@ -11,15 +11,15 @@ import UIKit
 class Utils: NSObject {
   
     class func showNetworkActivityIndicator() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
     
     class func hideNetworkActivityIndicator() {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
     class func isPad() -> Bool {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             return true
         } else {
             return false
@@ -27,7 +27,7 @@ class Utils: NSObject {
     }
     
     class func isPhone() -> Bool {
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+        if UIDevice.current.userInterfaceIdiom == .phone {
             return true
         } else {
             return false
@@ -38,16 +38,16 @@ class Utils: NSObject {
         showAlert("Error", message: "Unable to load photos. Please connect to a network")
     }
     
-    class func showAlert(title: String, message: String) {
+    class func showAlert(_ title: String, message: String) {
         let alert = UIAlertView()
         alert.title = title
         alert.message = message
-        alert.addButtonWithTitle("OK")
+        alert.addButton(withTitle: "OK")
         alert.show()
     }
     
     
-    class func setupRoundedCornersForLayer(layer: CALayer) {
+    class func setupRoundedCornersForLayer(_ layer: CALayer) {
         layer.cornerRadius = 9
         layer.masksToBounds = true
     }

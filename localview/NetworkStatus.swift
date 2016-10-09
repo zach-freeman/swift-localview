@@ -9,24 +9,24 @@
 import Foundation
 
 protocol NetworkStatusDelegate {
-  func networkStatusDidFinish(networkStatus:NetworkStatus)
+  func networkStatusDidFinish(_ networkStatus:NetworkStatus)
 }
 
-class NetworkStatus: NSOperation {
+class NetworkStatus: Operation {
   var delegate : NetworkStatusDelegate?
   var isReachable : Bool = false
   
   override func main() {
-    if self.cancelled {
+    if self.isCancelled {
       return
     }
     
-    let reachableUrl = NSURL(string: "http://www.google.com")
-    let reachableData = NSData(contentsOfURL:reachableUrl!)
+    let reachableUrl = URL(string: "http://www.google.com")
+    let reachableData = try? Data(contentsOf: reachableUrl!)
     if reachableData != nil {
       self.isReachable = true
     }
-    dispatch_async(dispatch_get_main_queue(), {
+    DispatchQueue.main.async(execute: {
       self.delegate?.networkStatusDidFinish(self)
     })
     

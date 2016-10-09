@@ -23,25 +23,25 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.photoFetchState = .PhotosNotFetched
+        self.photoFetchState = .photosNotFetched
         if (Utils.isPhone()) {
-            UIDevice.currentDevice().beginGeneratingDeviceOrientationNotifications()
-            NSNotificationCenter.defaultCenter().addObserver(
+            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+            NotificationCenter.default.addObserver(
                 self,
                 selector: #selector(PhotoFullScreenViewController.orientationChanged(_:)),
-                name: UIDeviceOrientationDidChangeNotification,
-                object: UIDevice.currentDevice())
+                name: NSNotification.Name.UIDeviceOrientationDidChange,
+                object: UIDevice.current)
             self.createViews()
         }
         
         // Do any additional setup after loading the view.
     }
   
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent;
+    override var preferredStatusBarStyle : UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent;
     }
   
-    func orientationChanged(note: NSNotification)
+    func orientationChanged(_ note: Notification)
     {
         // we have to remove the image and scroll views and re-add them because the
         // navigation bar size changes when the orientation changes
@@ -56,19 +56,19 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         let viewBounds:CGRect = self.viewBounds()
         self.createScrollView(viewBounds)
         self.createImageView(viewBounds)
-        self.view.bringSubviewToFront(doneButton)
+        self.view.bringSubview(toFront: doneButton)
     }
     
     func viewBounds() -> CGRect {
-        var viewFrame:CGRect = CGRectZero;
+        var viewFrame:CGRect = CGRect.zero;
         viewFrame = self.view.bounds
         return viewFrame;
     }
     
-    func createScrollView(viewBounds:CGRect) {
+    func createScrollView(_ viewBounds:CGRect) {
         // Create the scroll view
         self.containerScrollView = UIScrollView(frame: viewBounds)
-        self.containerScrollView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.containerScrollView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.containerScrollView.showsHorizontalScrollIndicator = false
         self.containerScrollView.showsVerticalScrollIndicator = false
         self.containerScrollView.delegate = self
@@ -77,30 +77,30 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         self.view.addSubview(self.containerScrollView)
     }
     
-    func createImageView(viewBounds:CGRect) {
+    func createImageView(_ viewBounds:CGRect) {
         self.fullImageView = UIImageView(frame:viewBounds)
         
-        self.fullImageView.contentMode = UIViewContentMode.ScaleAspectFill
-        self.fullImageView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        self.fullImageView.contentMode = UIViewContentMode.scaleAspectFill
+        self.fullImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.fullImageView.clipsToBounds = true
         self.containerScrollView.addSubview(self.fullImageView)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if (self.photoFetchState == .PhotosNotFetched) {
+        if (self.photoFetchState == .photosNotFetched) {
             self.showPhotoAfterDownload()
         }
     }
     
-    @IBAction func doneButtonTapped(sender: AnyObject) {
-        presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func doneButtonTapped(_ sender: AnyObject) {
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.imageDownloadProgressView.hidden = true
-        self.doneButton.hidden = true
+        self.imageDownloadProgressView.isHidden = true
+        self.doneButton.isHidden = true
     }
     
     override func didReceiveMemoryWarning() {
@@ -111,26 +111,26 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
 
     
     // MARK: - Scroll View Delegate
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return self.fullImageView
     }
     
-    func scrollViewDidZoom(scrollView: UIScrollView) {
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
         self.centerScrollViewContent()
     }
     
     func showPhotoAfterDownload() {
-        let sdWebImageManager:SDWebImageManager = SDWebImageManager.sharedManager()
+        let sdWebImageManager:SDWebImageManager = SDWebImageManager.shared()
         let progressBlock:SDWebImageDownloaderProgressBlock! = {(receivedSize:Int, expectedSize:Int) -> Void in
-            self.imageDownloadProgressView.hidden = false;
-            let receivedSizeFloat:Float = NSNumber(integer:receivedSize).floatValue
-            let expectedSizeFloat:Float = NSNumber(integer:expectedSize).floatValue
+            self.imageDownloadProgressView.isHidden = false;
+            let receivedSizeFloat:Float = NSNumber(value: receivedSize as Int).floatValue
+            let expectedSizeFloat:Float = NSNumber(value: expectedSize as Int).floatValue
             let progress:Float = receivedSizeFloat/expectedSizeFloat;
             self.imageDownloadProgressView.setProgress(progress, animated: true)
         }
-        let completionBlock:SDWebImageCompletionWithFinishedBlock! = {(image: UIImage!, error: NSError!, cacheType: SDImageCacheType, finished:Bool, url:NSURL!) -> Void in
-            dispatch_async(dispatch_get_main_queue()) {
-                self.photoFetchState = .PhotosFetched
+        let completionBlock:SDWebImageCompletionWithFinishedBlock! = {(image, error, cacheType, finished, url) -> Void in
+            DispatchQueue.main.async {
+                self.photoFetchState = .photosFetched
                 if (Utils.isPad()) {
                     self.fullImageView.image = image
                 } else if (Utils.isPhone()) {
@@ -138,18 +138,18 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
                     self.fullImage = image
                     self.setupImageInScrollView()
                 }
-                self.imageDownloadProgressView.hidden = true
-                self.doneButton.hidden = false
+                self.imageDownloadProgressView.isHidden = true
+                self.doneButton.isHidden = false
             }
             
         }
-        sdWebImageManager.downloadImageWithURL(self.flickrPhoto?.bigImageUrl, options: [], progress: progressBlock, completed: completionBlock)
+        sdWebImageManager.downloadImage(with: self.flickrPhoto?.bigImageUrl as URL!, options: [], progress: progressBlock, completed: completionBlock)
         var photoTitle : String = self.flickrPhoto!.title!
         if photoTitle.isEmpty {
             photoTitle = FlickrConstants.TITLE_NOT_AVAILABLE
         }
         self.commentTextView.text = photoTitle
-        self.commentTextView.textAlignment = .Center
+        self.commentTextView.textAlignment = .center
     }
     
     
@@ -157,7 +157,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         self.containerScrollView.minimumZoomScale = 1
         self.containerScrollView.zoomScale = 1
         
-        self.fullImageView.frame = CGRectMake(0, 0, self.fullImage!.size.width, self.fullImage!.size.height);
+        self.fullImageView.frame = CGRect(x: 0, y: 0, width: self.fullImage!.size.width, height: self.fullImage!.size.height);
         self.fullImageView.image = self.fullImage
         self.containerScrollView.contentSize = self.fullImage!.size
         

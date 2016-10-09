@@ -9,7 +9,7 @@
 import Foundation
 
 protocol PhotoListManagerDelegate {
-  func photoListManagerDidFinish(photoListManager : PhotoListManager)
+  func photoListManagerDidFinish(_ photoListManager : PhotoListManager)
 }
 
 class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,PhotoListFetcherDelegate {
@@ -17,8 +17,8 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
     var currentPlacemark:String!
     var flickrPhotoList : [FlickrPhoto] = []
     var locationUpdater:LocationUpdater!
-    var networkAccessQueue:NSOperationQueue {
-        let queue = NSOperationQueue()
+    var networkAccessQueue:OperationQueue {
+        let queue = OperationQueue()
         queue.name = "NetworkAccessQueue"
         queue.maxConcurrentOperationCount = 1
         return queue
@@ -39,11 +39,11 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
     self.networkAccessQueue.addOperation(networkStatusOperation)
   }
   
-  func networkStatusDidFinish(networkStatus: NetworkStatus) {
+  func networkStatusDidFinish(_ networkStatus: NetworkStatus) {
     self.networkAccessQueue.cancelAllOperations()
     if networkStatus.isReachable == false {
       Utils.showReachabilityAlert()
-      dispatch_async(dispatch_get_main_queue(), {
+      DispatchQueue.main.async(execute: {
         self.delegate?.photoListManagerDidFinish(self)
       })
     } else if networkStatus.isReachable == true {
@@ -57,7 +57,7 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
     self.locationUpdater.locationUpdaterDelegate = self
   }
   
-  func locationAvailable(locationUpdater: LocationUpdater) {
+  func locationAvailable(_ locationUpdater: LocationUpdater) {
     self.currentPlacemark = locationUpdater.currentPlacemark
     if !locationUpdater.currentLongitude.isEmpty &&
       !locationUpdater.currentLatitude.isEmpty {
@@ -66,17 +66,17 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
   }
   
   // MARK: - Photo List Fetcher
-  func startPhotoListFetcherWithCoordinates(latitude:String, longitude:String) {
+  func startPhotoListFetcherWithCoordinates(_ latitude:String, longitude:String) {
     
     let photoListFetcherOperation : PhotoListFetcher = PhotoListFetcher(currentLatitude: latitude, currentLongitude: longitude, currentNetwork: Network())
     photoListFetcherOperation.delegate = self
     self.networkAccessQueue.addOperation(photoListFetcherOperation)
   }
   
-  func photoListFetcherDidFinish(photoListFetcher: PhotoListFetcher) {
+  func photoListFetcherDidFinish(_ photoListFetcher: PhotoListFetcher) {
     self.networkAccessQueue.cancelAllOperations()
     self.flickrPhotoList = photoListFetcher.flickrPhotos
-    dispatch_async(dispatch_get_main_queue(), {
+    DispatchQueue.main.async(execute: {
         self.delegate?.photoListManagerDidFinish(self)
     })
     
