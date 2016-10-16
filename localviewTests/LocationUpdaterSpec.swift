@@ -6,11 +6,11 @@ import Contacts
 
 class LocationUpdaterSpec: QuickSpec {
     override func spec() {
-        let locationUpdater:LocationUpdater = LocationUpdater()
+        let locationUpdater: LocationUpdater = LocationUpdater()
         describe("formatPlacemark") {
             context("NewYorkPlacemark") {
-                let expectedResult:String = "New York, NY, United States"
-                var formattedPlacemark:String = ""
+                let expectedResult: String = "New York, NY, United States"
+                var formattedPlacemark: String = ""
                 beforeEach {
                     let coordinate = CLLocationCoordinate2DMake(40.7590686, -73.98496110000001)
                     let address = CNMutablePostalAddress()
@@ -28,8 +28,8 @@ class LocationUpdaterSpec: QuickSpec {
                 }
             }
             context("LondonPlacemark") {
-                let expectedResult:String = "London, United Kingdom"
-                var formattedPlacemark:String = ""
+                let expectedResult: String = "London, United Kingdom"
+                var formattedPlacemark: String = ""
                 beforeEach {
                     let coordinate = CLLocationCoordinate2DMake(51.51006860112236, -0.1337113133153556)
                     let address = CNMutablePostalAddress()

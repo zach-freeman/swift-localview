@@ -13,12 +13,10 @@ class PhotoLoadViewController: UIViewController {
 
   @IBOutlet weak var loadingLabel: UILabel!
   @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
-  
   override func viewDidLoad() {
     super.viewDidLoad()
 
   }
-  
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     Utils.showNetworkActivityIndicator()
@@ -26,7 +24,6 @@ class PhotoLoadViewController: UIViewController {
       self.loadingActivityIndicator.startAnimating()
     }
   }
-  
   override func viewDidDisappear(_ animated: Bool) {
     Utils.hideNetworkActivityIndicator()
     DispatchQueue.main.async {
@@ -38,6 +35,5 @@ class PhotoLoadViewController: UIViewController {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
-  
 
 }

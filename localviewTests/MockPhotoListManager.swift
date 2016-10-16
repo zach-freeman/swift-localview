@@ -8,10 +8,9 @@
 
 import Foundation
 
-class MockPhotoListManager : PhotoListManager {
+class MockPhotoListManager: PhotoListManager {
     var startNetworkStatusRequestCount = 0
     override func startNetworkStatus() {
         startNetworkStatusRequestCount = 1
     }
-    
 }

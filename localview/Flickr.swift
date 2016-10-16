@@ -9,18 +9,15 @@
 import Foundation
 
 struct Flickr {
-    
-    static let url = FlickrConstants.FLICKR_URL
-    
+    static let url = FlickrConstants.kFlickrUrl
     static func parameters(_ latitude: String, longitude: String) -> [String: AnyObject] {
-        return ["method": FlickrConstants.SEARCH_METHOD as AnyObject,
-            "api_key": FlickrConstants.FLICKR_KEY as AnyObject,
+        return ["method": FlickrConstants.kSearchMethod as AnyObject,
+            "api_key": FlickrConstants.kFlickrApiKey as AnyObject,
             "lat": latitude as AnyObject,
             "lon": longitude as AnyObject,
-            "per_page": FlickrConstants.NUMBER_OF_PHOTOS as AnyObject,
-            "format": FlickrConstants.FORMAT_TYPE as AnyObject,
-            "privacy_filter": FlickrConstants.PRIVACY_FILTER as AnyObject,
-            "nojsoncallback": FlickrConstants.JSON_CALLBACK as AnyObject]
+            "per_page": FlickrConstants.kNumberOfPhotos as AnyObject,
+            "format": FlickrConstants.kFormatType as AnyObject,
+            "privacy_filter": FlickrConstants.kPrivacyFilter as AnyObject,
+            "nojsoncallback": FlickrConstants.kJsonCallback as AnyObject]
     }
-    
 }

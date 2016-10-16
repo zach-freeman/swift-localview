@@ -8,9 +8,9 @@
 
 import Foundation
 
-class MockPhotoListFetcherDelegate : PhotoListFetcherDelegate {
-    var delegateCallCount = 0;
-    func photoListFetcherDidFinish(_ photoListFetcher : PhotoListFetcher) {
+class MockPhotoListFetcherDelegate: PhotoListFetcherDelegate {
+    var delegateCallCount = 0
+    func photoListFetcherDidFinish(_ photoListFetcher: PhotoListFetcher) {
         delegateCallCount += 1
     }
 }

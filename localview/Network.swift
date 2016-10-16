@@ -11,12 +11,11 @@ import Alamofire
 import SwiftyJSON
 
 
-struct Network : Networking {
+struct Network: Networking {
     func request(_ latitude: String, longitude: String, completion: @escaping (Any?) -> ()) {
         Alamofire.request(Flickr.url, parameters: Flickr.parameters(latitude, longitude: longitude))
-            .responseJSON{ response in
+            .responseJSON { response in
                 completion(response.result.value)
-                
         }
     }
 }
