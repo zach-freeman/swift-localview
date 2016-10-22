@@ -35,9 +35,12 @@ UIViewControllerPreviewingDelegate {
 
         self.photoFetchState = .photoListNotFetched
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle(for: type(of: self)))
-        self.photoLoadViewController = storyboard
-            .instantiateViewController(withIdentifier: "PhotoLoadViewController")
-            as! PhotoLoadViewController
+        let aPhotoLoadViewController = storyboard.instantiateViewController(withIdentifier: "PhotoLoadViewController")
+        guard let viewController = aPhotoLoadViewController as? PhotoLoadViewController else {
+            print("couldn't load the PhotoLoadViewController")
+            return
+        }
+        self.photoLoadViewController = viewController
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.tintColor = UIColor.gray
         self.refreshControl!.addTarget(self,
@@ -93,15 +96,19 @@ UIViewControllerPreviewingDelegate {
         at indexPath: IndexPath) -> UICollectionReusableView {
             switch kind {
             case UICollectionElementKindSectionHeader:
-                let headerView =
-                collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                    withReuseIdentifier: "PhotosHeaderView",
-                    for: indexPath)
-                    as! PhotosHeaderView
-                if let currentPlacemark = self.photoListManager?.currentPlacemark {
-                    headerView.locationLabel.text = currentPlacemark
+                let optionalHeaderView = collectionView
+                    .dequeueReusableSupplementaryView(ofKind: kind,
+                                                      withReuseIdentifier: "PhotosHeaderView",
+                                                      for: indexPath)
+                guard let headerView = optionalHeaderView as? PhotosHeaderView else {
+                    print("couldn't load PhotosHeaderView")
+                    return optionalHeaderView
                 }
-                return headerView
+                let photosHeaderView = headerView
+                if let currentPlacemark = self.photoListManager?.currentPlacemark {
+                    photosHeaderView.locationLabel.text = currentPlacemark
+                }
+                return photosHeaderView
             default:
                 assert(false, "Unexpected element kind")
             }
@@ -109,22 +116,38 @@ UIViewControllerPreviewingDelegate {
 
     override func collectionView(_ collectionView: UICollectionView,
                                  cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier, for: indexPath) as! PhotoCell
+        let optionalCell = collectionView.dequeueReusableCell(withReuseIdentifier: self.reuseIdentifier,
+                                                              for: indexPath)
+        guard let cell = optionalCell as? PhotoCell else {
+            print("couldn't load PhotoCell")
+            return optionalCell
+        }
+        let photoCell = cell
         let flickrPhoto = photoForIndexPath(indexPath)
-        cell.tag = Int(flickrPhoto.photoSetId!)!
-        let previewImageLayer = cell.smallImageView.layer
+        photoCell.tag = Int(flickrPhoto.photoSetId!)!
+        let previewImageLayer = photoCell.smallImageView.layer
         Utils.setupRoundedCornersForLayer(previewImageLayer)
         let placeholder: UIImage = UIImage(named: "placeholder")!
-        cell.smallImageView?.sd_setImage(with: flickrPhoto.smallImageUrl! as URL,
+        photoCell.smallImageView?.sd_setImage(with: flickrPhoto.smallImageUrl! as URL,
                                          placeholderImage: placeholder)
-        cell.backgroundColor = UIColor.black
-        return cell
+        photoCell.backgroundColor = UIColor.black
+        return photoCell
     }
     override func collectionView(_ collectionView: UICollectionView,
                                  didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath) as! PhotoCell
-        self.selectedImage = cell.smallImageView
-        let photoFullScreenViewController = storyboard!.instantiateViewController(withIdentifier: "PhotoFullScreenViewController") as! PhotoFullScreenViewController
+        let optionalCell = collectionView.cellForItem(at: indexPath)
+        guard let cell = optionalCell as? PhotoCell else {
+            print("couldn't load PhotoCell")
+            return
+        }
+        let photoCell = cell
+        self.selectedImage = photoCell.smallImageView
+        let viewController = storyboard!
+            .instantiateViewController(withIdentifier: "PhotoFullScreenViewController")
+        guard let photoFullScreenViewController = viewController as? PhotoFullScreenViewController else {
+            print("couldn't load PhotoFullScreenViewController")
+            return
+        }
         photoFullScreenViewController.flickrPhoto = photoForIndexPath(indexPath)
         photoFullScreenViewController.transitioningDelegate = self
         present(photoFullScreenViewController, animated: true, completion: nil)
@@ -146,8 +169,9 @@ UIViewControllerPreviewingDelegate {
             if photoListManager.flickrPhotoList.count > 0 {
                 self.flickrPhotoList = photoListManager.flickrPhotoList
             } else {
-                let alert: UIAlertController = Utils.buildAlert("Error",
-                                                                 message: "No photos retrieved. Is your Flickr key correct?")
+                let alert: UIAlertController = Utils
+                    .buildAlert("Error",
+                                message: "No photos retrieved. Is your Flickr key correct?")
                 self.present(alert, animated: true)
             }
         } else {

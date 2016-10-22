@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FadeViewTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {   
+class FadeViewTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     let duration    = 0.35
     var presenting  = true
     var originFrame = CGRect.zero

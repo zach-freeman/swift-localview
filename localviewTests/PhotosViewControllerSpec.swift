@@ -23,8 +23,15 @@ class PhotosViewControllerSpec: QuickSpec {
             subjectViewController.photoFetchState = fakePhotoFetchState
             let storyboard = UIStoryboard(name: "Main",
                 bundle: Bundle(for: type(of: self)))
-            let navigationController = storyboard.instantiateInitialViewController() as! UINavigationController
-            subjectViewController = navigationController.topViewController as! PhotosViewController
+            let optionalNavController = storyboard.instantiateInitialViewController()
+            guard let navigationController = optionalNavController as? UINavigationController else {
+                return
+            }
+            let optionalSubjectViewController = navigationController.topViewController
+            guard let theSubjectViewController = optionalSubjectViewController as? PhotosViewController else {
+                return
+            }
+            subjectViewController = theSubjectViewController
             UIApplication.shared.keyWindow!.rootViewController = navigationController
             let _ = navigationController.view
             let _ = subjectViewController.view
@@ -81,8 +88,12 @@ class PhotosViewControllerSpec: QuickSpec {
                 expect(subjectViewController.photoListManager).toNot(beNil())
             }
             it("should call the photo manager network status method") {
-                let mockPhotoListManager = container
-                    .resolve(PhotoListManager.self) as! MockPhotoListManager
+                let optionalMockPhotoListManager = container
+                    .resolve(PhotoListManager.self)
+                guard let mockPhotoListManager = optionalMockPhotoListManager as? MockPhotoListManager else {
+                    print("couldn't resolve MockPhotoListManager")
+                    return
+                }
                 expect(mockPhotoListManager.startNetworkStatusRequestCount).to(equal(1))
             }
         }

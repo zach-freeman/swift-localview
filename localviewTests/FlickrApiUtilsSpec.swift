@@ -16,8 +16,10 @@ class FlickrApiUtilsSpec: QuickSpec {
                     flickrResponseJson = LocalViewTestsHelpers.fileContentsAsJson(flickrResponse as NSData)
                     flickrPhotos = FlickrApiUtils.setupPhotoListWithJSON(flickrResponseJson)
                     expectedFlickrPhoto.photoSetId = "21619543780"
-                    expectedFlickrPhoto.smallImageUrl = NSURL(string: "https://static.flickr.com/5730/21619543780_9263e389bc_s.jpg") as URL?
-                    expectedFlickrPhoto.bigImageUrl = NSURL(string: "https://static.flickr.com/5730/21619543780_9263e389bc_b.jpg") as URL?
+                    expectedFlickrPhoto.smallImageUrl =
+                        NSURL(string: "https://static.flickr.com/5730/21619543780_9263e389bc_s.jpg") as URL?
+                    expectedFlickrPhoto.bigImageUrl =
+                        NSURL(string: "https://static.flickr.com/5730/21619543780_9263e389bc_b.jpg") as URL?
                     expectedFlickrPhoto.title = "FabLearn 0"
                 }
                 it("returns an array of 5 objects") {
@@ -48,7 +50,7 @@ class FlickrApiUtilsSpec: QuickSpec {
                 let expectedUrl = NSURL(string: expectedUrlString)
                 var photoUrl: NSURL = NSURL(string: "")!
                 beforeEach {
-                    photoUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.SMALL_IMAGE_SIZE,
+                    photoUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.kSmallImageSize,
                                                               photoId: "1418878",
                                                               server: "2",
                                                               secret: "1e9228336",
@@ -63,7 +65,7 @@ class FlickrApiUtilsSpec: QuickSpec {
                 let expectedUrl = NSURL(string: expectedUrlString)
                 var photoUrl: NSURL = NSURL(string: "")!
                 beforeEach {
-                    photoUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.BIG_IMAGE_SIZE,
+                    photoUrl = FlickrApiUtils.photoUrlForSize(FlickrConstants.kBigImageSize,
                                                               photoId: "1418878",
                                                               server: "2",
                                                               secret: "1e9228336",

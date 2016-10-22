@@ -32,7 +32,11 @@ class PhotoListFetcherSpec: QuickSpec {
             networkAccessQueue.addOperation(fetcher)
         }
         it("calls network request") {
-            let network = container.resolve(Networking.self) as! MockNetwork
+            let optionalNetwork = container.resolve(Networking.self)
+            guard let network = optionalNetwork as? MockNetwork else {
+                print("can't get mock network")
+                return
+            }
             expect(network.requestCount).toEventually(equal(1))
         }
         it("fills the flickrPhotos array") {
@@ -41,7 +45,11 @@ class PhotoListFetcherSpec: QuickSpec {
             expect(fetcher.flickrPhotos[0].photoSetId).toEventually(equal("21619543780"))
         }
         it("calls the delegate") {
-            let delegate = container.resolve(PhotoListFetcherDelegate.self) as! MockPhotoListFetcherDelegate
+            let optionalDelegate = container.resolve(PhotoListFetcherDelegate.self)
+            guard let delegate = optionalDelegate as? MockPhotoListFetcherDelegate else {
+                print("couldn't get MockPhotoListFetcherDelegate")
+                return
+            }
             expect(delegate.delegateCallCount).toEventually(equal(1))
         }
         afterEach {

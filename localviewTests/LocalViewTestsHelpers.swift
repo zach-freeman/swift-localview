@@ -13,8 +13,13 @@ open class LocalViewTestsHelpers {
     static func bundleFileContentsAsData(_ filename: String, filetype: String) -> Data {
         let bundle = Bundle(for: object_getClass(self))
         let filePath = bundle.path(forResource: filename, ofType: filetype)
-        let fileContents: Data = try! Data(contentsOf: URL(fileURLWithPath: filePath!))
-        return fileContents
+        do {
+            let fileContents: Data = try Data(contentsOf: URL(fileURLWithPath: filePath!))
+            return fileContents
+        } catch {
+            print("unable to get file contents of \(filename)")
+            return Data()
+        }
     }
     static func fileContentsAsJson(_ fileContents: NSData) -> JSON {
         var fileContentsJson: JSON = nil
