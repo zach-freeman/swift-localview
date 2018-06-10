@@ -23,7 +23,7 @@ class PhotoListFetcherSpec: QuickSpec {
                                       currentNetwork: r.resolve(Networking.self)!)
             }
                 .initCompleted { r, c in
-                    let thefetch = c as PhotoListFetcher!
+                    let thefetch = c as PhotoListFetcher?
                     thefetch?.network = r.resolve(Networking.self)!
             }
             container.register(PhotoListFetcherDelegate.self) { _ in mockPhotoListFetcherDelegate }

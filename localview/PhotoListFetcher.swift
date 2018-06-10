@@ -30,7 +30,7 @@ class PhotoListFetcher: Operation {
             return
         }
         self.network.request(self.currentLatitude, longitude: self.currentLongitude) { response in
-            let responseJson: JSON = JSON(response)
+            let responseJson: JSON = JSON(response!)
             self.flickrPhotos = FlickrApiUtils.setupPhotoListWithJSON(responseJson)
             DispatchQueue.main.async(execute: {
                 self.delegate?.photoListFetcherDidFinish(self)
