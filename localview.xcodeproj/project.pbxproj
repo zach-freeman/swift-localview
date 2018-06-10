@@ -107,6 +107,7 @@
 		F97C3EB81C0B4E0900EB5362 /* FlickrApiUtilsSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97C3EB71C0B4E0900EB5362 /* FlickrApiUtilsSpec.swift */; };
 		F97C3EBA1C0B4EF300EB5362 /* LocalViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F97C3EB91C0B4EF300EB5362 /* LocalViewTests.swift */; };
 		F9949A681C557B6900D89268 /* LocalViewTestsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9949A671C557B6900D89268 /* LocalViewTestsHelpers.swift */; };
+		F9D89DE220CDEA1300B67025 /* SwiftyJSON.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D9F8341F20CC171900754B43 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -350,6 +351,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				F9D89DE220CDEA1300B67025 /* SwiftyJSON.framework in Embed Frameworks */,
 				D914C6EA1D89C95600C16DD5 /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
