@@ -131,7 +131,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
                 self.doneButton.isHidden = false
             }
         }*/
-        
+
         let completion: SDInternalCompletionBlock = { [weak self] (image, data, error, cacheType, finished, imageURL) in
             guard self != nil else {
                 return
