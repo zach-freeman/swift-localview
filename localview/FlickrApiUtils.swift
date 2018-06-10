@@ -81,9 +81,9 @@ open class FlickrApiUtils {
             photoUrlString += "farm\(farm!)."
         }
         let sizeSuffix = suffixForSize(size)
-        assert(server.characters.count > 0, "Server attribute is required")
-        assert(secret.characters.count > 0, "Secret attribute is required")
-        assert(photoId.characters.count > 0, "Id attribute is required")
+        assert(server.utf8.count > 0, "Server attribute is required")
+        assert(secret.utf8.count > 0, "Secret attribute is required")
+        assert(photoId.utf8.count > 0, "Id attribute is required")
         photoUrlString += FlickrConstants.kFlickrPhotoSourceHost + "/\(server)/\(photoId)_\(secret)_\(sizeSuffix).jpg"
         return URL(string: photoUrlString)!
     }

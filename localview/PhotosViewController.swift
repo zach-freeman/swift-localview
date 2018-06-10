@@ -60,7 +60,7 @@ UIViewControllerPreviewingDelegate {
             self.startPhotoListManager()
         }
     }
-    func refresh() {
+    @objc func refresh() {
         self.photoFetchState = .photoListNotFetched
         self.collectionView?.isHidden = true
         self.startPhotoListManager()

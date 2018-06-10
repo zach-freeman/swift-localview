@@ -34,7 +34,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return UIStatusBarStyle.lightContent
     }
-    func orientationChanged(_ note: Notification) {
+    @objc func orientationChanged(_ note: Notification) {
         // we have to remove the image and scroll views and re-add them because the
         // navigation bar size changes when the orientation changes
         self.fullImageView.removeFromSuperview()
