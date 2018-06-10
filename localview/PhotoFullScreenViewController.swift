@@ -98,60 +98,37 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     func showPhotoAfterDownload() {
         let sdWebImageManager: SDWebImageManager = SDWebImageManager.shared()
-        /*let progressBlock: SDWebImageDownloaderProgressBlock! = {
-            (receivedSize: Int, expectedSize: Int, targetUrl: NSURL) -> () in
-            self.imageDownloadProgressView.isHidden = false
-            let receivedSizeFloat: Float = NSNumber(value: receivedSize as Int).floatValue
-            let expectedSizeFloat: Float = NSNumber(value: expectedSize as Int).floatValue
-            let progress: Float = receivedSizeFloat/expectedSizeFloat
-            self.imageDownloadProgressView.setProgress(progress, animated: true)
-        }*/
         let progress: SDWebImageDownloaderProgressBlock = { [weak self] (receivedSize, expectedSize, targetURL) in
             guard self != nil else {
                 return
             }
-            self?.imageDownloadProgressView.isHidden = false
-            let receivedSizeFloat: Float = NSNumber(value: receivedSize as Int).floatValue
-            let expectedSizeFloat: Float = NSNumber(value: expectedSize as Int).floatValue
-            let progress: Float = receivedSizeFloat/expectedSizeFloat
-            self?.imageDownloadProgressView.setProgress(progress, animated: true)
-        }
-        /*let completionBlock: SDWebImageCompletionWithFinishedBlock! = {
-            (image, error, cacheType, finished, url) -> Void in
             DispatchQueue.main.async {
-                self.photoFetchState = .photosFetched
-                if Utils.isPad() {
-                    self.fullImageView.image = image
-                } else if Utils.isPhone() {
-                    self.fullImage = UIImage()
-                    self.fullImage = image
-                    self.setupImageInScrollView()
-                }
-                self.imageDownloadProgressView.isHidden = true
-                self.doneButton.isHidden = false
+                self?.imageDownloadProgressView.isHidden = false
+                let receivedSizeFloat: Float = NSNumber(value: receivedSize as Int).floatValue
+                let expectedSizeFloat: Float = NSNumber(value: expectedSize as Int).floatValue
+                let progress: Float = receivedSizeFloat/expectedSizeFloat
+                self?.imageDownloadProgressView.setProgress(progress, animated: true)
             }
-        }*/
+        }
 
         let completion: SDInternalCompletionBlock = { [weak self] (image, data, error, cacheType, finished, imageURL) in
             guard self != nil else {
                 return
             }
-            self?.photoFetchState = .photosFetched
-            if Utils.isPad() {
-                self?.fullImageView.image = image
-            } else if Utils.isPhone() {
-                self?.fullImage = UIImage()
-                self?.fullImage = image
-                self?.setupImageInScrollView()
+            DispatchQueue.main.async {
+                self?.photoFetchState = .photosFetched
+                if Utils.isPad() {
+                    self?.fullImageView.image = image
+                } else if Utils.isPhone() {
+                    self?.fullImage = UIImage()
+                    self?.fullImage = image
+                    self?.setupImageInScrollView()
+                }
+                self?.imageDownloadProgressView.isHidden = true
+                self?.doneButton.isHidden = false
             }
-            self?.imageDownloadProgressView.isHidden = true
-            self?.doneButton.isHidden = false
 
         }
-        /*sdWebImageManager.download(with: self.flickrPhoto?.bigImageUrl as URL!,
-                                        options: [],
-                                        progress: progress,
-                                        completed: completion)*/
         sdWebImageManager.loadImage(with: self.flickrPhoto?.bigImageUrl as URL?, options: [], progress: progress, completed: completion)
         var photoTitle: String = self.flickrPhoto!.title!
         if photoTitle.isEmpty {
