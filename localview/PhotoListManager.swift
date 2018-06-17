@@ -8,37 +8,36 @@
 
 import Foundation
 
-protocol PhotoListManagerDelegate {
-    func photoListManagerDidFinish(_ photoListManager : PhotoListManager, alert : UIAlertController?)
+protocol PhotoListManagerDelegate: AnyObject {
+    func photoListManagerDidFinish(_ photoListManager: PhotoListManager, alert: UIAlertController?)
 }
 
-class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,PhotoListFetcherDelegate {
-    var delegate : PhotoListManagerDelegate?
-    var currentPlacemark:String!
-    var flickrPhotoList : [FlickrPhoto] = []
-    var locationUpdater:LocationUpdater!
-    var networkAccessQueue:OperationQueue {
+class PhotoListManager: NSObject,
+NetworkStatusDelegate,
+LocationUpdaterDelegate,
+PhotoListFetcherDelegate {
+    weak var delegate: PhotoListManagerDelegate?
+    var currentPlacemark: String!
+    var flickrPhotoList: [FlickrPhoto] = []
+    var locationUpdater: LocationUpdater!
+    var networkAccessQueue: OperationQueue {
         let queue = OperationQueue()
         queue.name = "NetworkAccessQueue"
         queue.maxConcurrentOperationCount = 1
         return queue
     }
-  
   override init() {
     super.init()
     self.currentPlacemark = ""
     self.startNetworkStatus()
-    
   }
 
   // MARK: - Network Status
   func startNetworkStatus() {
-    
-    let networkStatusOperation : NetworkStatus = NetworkStatus();
+    let networkStatusOperation: NetworkStatus = NetworkStatus()
     networkStatusOperation.delegate = self
     self.networkAccessQueue.addOperation(networkStatusOperation)
   }
-  
   func networkStatusDidFinish(_ networkStatus: NetworkStatus) {
     self.networkAccessQueue.cancelAllOperations()
     if networkStatus.isReachable == false {
@@ -50,36 +49,32 @@ class PhotoListManager:NSObject,NetworkStatusDelegate,LocationUpdaterDelegate,Ph
       self.startLocationUpdater()
     }
   }
-  
   // MARK: - Location Updater
   func startLocationUpdater() {
     self.locationUpdater = LocationUpdater()
     self.locationUpdater.locationUpdaterDelegate = self
   }
-  
   func locationAvailable(_ locationUpdater: LocationUpdater) {
     self.currentPlacemark = locationUpdater.currentPlacemark
     if !locationUpdater.currentLongitude.isEmpty &&
       !locationUpdater.currentLatitude.isEmpty {
-        self.startPhotoListFetcherWithCoordinates(locationUpdater.currentLatitude, longitude: locationUpdater.currentLongitude)
+        self.startPhotoListFetcherWithCoordinates(locationUpdater.currentLatitude,
+                                                  longitude: locationUpdater.currentLongitude)
     }
   }
-  
   // MARK: - Photo List Fetcher
-  func startPhotoListFetcherWithCoordinates(_ latitude:String, longitude:String) {
-    
-    let photoListFetcherOperation : PhotoListFetcher = PhotoListFetcher(currentLatitude: latitude, currentLongitude: longitude, currentNetwork: Network())
+  func startPhotoListFetcherWithCoordinates(_ latitude: String, longitude: String) {
+    let photoListFetcherOperation: PhotoListFetcher = PhotoListFetcher(currentLatitude: latitude,
+                                                                        currentLongitude: longitude,
+                                                                        currentNetwork: Network())
     photoListFetcherOperation.delegate = self
     self.networkAccessQueue.addOperation(photoListFetcherOperation)
   }
-  
   func photoListFetcherDidFinish(_ photoListFetcher: PhotoListFetcher) {
     self.networkAccessQueue.cancelAllOperations()
     self.flickrPhotoList = photoListFetcher.flickrPhotos
     DispatchQueue.main.async(execute: {
-        self.delegate?.photoListManagerDidFinish(self, alert : nil)
+        self.delegate?.photoListManagerDidFinish(self, alert: nil)
     })
-    
   }
-    
 }

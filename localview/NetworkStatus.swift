@@ -8,19 +8,17 @@
 
 import Foundation
 
-protocol NetworkStatusDelegate {
-  func networkStatusDidFinish(_ networkStatus:NetworkStatus)
+protocol NetworkStatusDelegate: AnyObject {
+  func networkStatusDidFinish(_ networkStatus: NetworkStatus)
 }
 
 class NetworkStatus: Operation {
-  var delegate : NetworkStatusDelegate?
-  var isReachable : Bool = false
-  
+  weak var delegate: NetworkStatusDelegate?
+  var isReachable: Bool = false
   override func main() {
     if self.isCancelled {
       return
     }
-    
     let reachableUrl = URL(string: "http://www.google.com")
     let reachableData = try? Data(contentsOf: reachableUrl!)
     if reachableData != nil {
@@ -29,6 +27,5 @@ class NetworkStatus: Operation {
     DispatchQueue.main.async(execute: {
       self.delegate?.networkStatusDidFinish(self)
     })
-    
   }
 }

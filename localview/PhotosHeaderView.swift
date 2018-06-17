@@ -9,6 +9,5 @@
 import UIKit
 
 class PhotosHeaderView: UICollectionReusableView {
-        
     @IBOutlet weak var locationLabel: UILabel!
 }
