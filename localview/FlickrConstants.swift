@@ -20,5 +20,9 @@ class FlickrConstants: NSObject {
   static let kTitleNotAvailable: String = "Title not available"
   static let kSmallImageSize: FlickrApiUtils.FlickrPhotoSize = FlickrApiUtils.FlickrPhotoSize.photoSizeSmallSquare75
   static let kBigImageSize: FlickrApiUtils.FlickrPhotoSize = FlickrApiUtils.FlickrPhotoSize.photoSizeLarge1024
-  static let kMaxTitleSize: String = "UmjLyNul3eFoj5zVivYVfR18coNUSInD3rRO2ABzwSDzigNATEJTam0HlMVwcoY0LBeK4m4Zhwu0ZC7S24GrONKymeEXVUMDst97IN96caaZw44c94ClHK1X6sIpSvoSqVejiTu6Fscq12zIi2zwHjROVYwhH4mcvUgGLz3Q06ZCq8fuxwUGBcK3n9h6SXqj3EnRjHF182yXoNN9eM4PW3ZUHgh0y449WnAHpTIex46ys8q3itu9GTTSPXGeVLG"
+  static let kMaxTitleSize: String = """
+UmjLyNul3eFoj5zVivYVfR18coNUSInD3rRO2ABzwSDzigNATEJTam0HlMVwcoY0LBeK4m4Zhwu0ZC7S24GrONKymeEXVUMDst97IN96caaZw44c94ClHK1X
+6sIpSvoSqVejiTu6Fscq12zIi2zwHjROVYwhH4mcvUgGLz3Q06ZCq8fuxwUGBcK3n9h6SXqj3EnRjHF182yXoNN9eM4PW3ZUHgh0y449WnAHpTIex46ys8q3
+itu9GTTSPXGeVLG
+"""
 }

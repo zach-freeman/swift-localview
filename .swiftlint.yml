@@ -1,3 +1,5 @@
+disabled_rules: #rule identifiers to exclude from running
+  - function_body_length
 included: # paths to include during linting. `--path` is ignored if present.
   - localview
   - localviewTests
