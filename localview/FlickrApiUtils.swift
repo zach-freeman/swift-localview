@@ -77,7 +77,7 @@ open class FlickrApiUtils {
         // https://farm{farm-id}.static.flickr.com/{server-id}/{id}_{secret}_[mstb].jpg
         // https://farm{farm-id}.static.flickr.com/{server-id}/{id}_{secret}.jpg
         var photoUrlString = "https://"
-        if let _ = farm {
+        if farm != nil {
             photoUrlString += "farm\(farm!)."
         }
         let sizeSuffix = suffixForSize(size)

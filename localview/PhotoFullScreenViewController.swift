@@ -42,7 +42,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         self.createViews()
         self.setupImageInScrollView()
     }
-    func createViews() -> Void {
+    func createViews() {
         let viewBounds: CGRect = self.viewBounds()
         self.createScrollView(viewBounds)
         self.createImageView(viewBounds)
@@ -60,12 +60,12 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         self.containerScrollView.showsHorizontalScrollIndicator = false
         self.containerScrollView.showsVerticalScrollIndicator = false
         self.containerScrollView.delegate = self
-        let MaxScale: CGFloat = 1.5
-        self.containerScrollView.maximumZoomScale = MaxScale
+        let maxScale: CGFloat = 1.5
+        self.containerScrollView.maximumZoomScale = maxScale
         self.view.addSubview(self.containerScrollView)
     }
     func createImageView(_ viewBounds: CGRect) {
-        self.fullImageView = UIImageView(frame:viewBounds)
+        self.fullImageView = UIImageView(frame: viewBounds)
         self.fullImageView.contentMode = UIViewContentMode.scaleAspectFill
         self.fullImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.fullImageView.clipsToBounds = true
@@ -129,7 +129,10 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
             }
 
         }
-        sdWebImageManager.loadImage(with: self.flickrPhoto?.bigImageUrl as URL?, options: [], progress: progress, completed: completion)
+        sdWebImageManager.loadImage(with: self.flickrPhoto?.bigImageUrl as URL?,
+                                    options: [],
+                                    progress: progress,
+                                    completed: completion)
         var photoTitle: String = self.flickrPhoto!.title!
         if photoTitle.isEmpty {
             photoTitle = FlickrConstants.kTitleNotAvailable

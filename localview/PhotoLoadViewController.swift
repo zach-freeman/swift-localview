@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class PhotoLoadViewController: UIViewController {
 
   @IBOutlet weak var loadingLabel: UILabel!

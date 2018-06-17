@@ -4,7 +4,7 @@ import SwiftyJSON
 
 class FlickrApiUtilsSpec: QuickSpec {
     override func spec() {
-        var flickrResponseJson: JSON = nil
+        var flickrResponseJson: JSON = JSON.null
         var flickrPhotos: [FlickrPhoto] = []
         var flickrResponse: Data = Data()
         let expectedFlickrPhoto: FlickrPhoto = FlickrPhoto()

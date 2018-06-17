@@ -9,7 +9,7 @@
 import UIKit
 
 class FlickrConstants: NSObject {
-  static let kFlickrApiKey: String = "yourFlickrApiKey"
+  static let kFlickrApiKey: String = "ffdc589af7b9b345949be0653dccad03"
   static let kFlickrUrl: String = "https://api.flickr.com/services/rest/"
   static let kSearchMethod: String = "flickr.photos.search"
   static let kFormatType: String = "json"

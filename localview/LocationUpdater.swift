@@ -10,12 +10,12 @@ import Foundation
 import MapKit
 import CoreLocation
 
-protocol LocationUpdaterDelegate {
+protocol LocationUpdaterDelegate: AnyObject {
   func locationAvailable(_ locationUpdater: LocationUpdater)
 }
 
 class LocationUpdater: NSObject, CLLocationManagerDelegate {
-    var locationUpdaterDelegate: LocationUpdaterDelegate?
+    weak var locationUpdaterDelegate: LocationUpdaterDelegate?
     let locationManager: CLLocationManager = CLLocationManager()
     var shouldUpdateLocation: Bool!
     var currentLatitude: String!
@@ -42,13 +42,10 @@ class LocationUpdater: NSObject, CLLocationManagerDelegate {
     case .notDetermined:
       print("authorization not determined")
       self.locationManager.requestWhenInUseAuthorization()
-      break
     case .denied:
       print("Authorization Denied")
-      break
     case .authorizedWhenInUse, .authorizedAlways:
       self.locationManager.startUpdatingLocation()
-      break
     default:
       break
     }

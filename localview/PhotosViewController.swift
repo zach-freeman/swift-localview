@@ -48,8 +48,6 @@ UIViewControllerPreviewingDelegate {
                                        for: .valueChanged)
         collectionView!.addSubview(self.refreshControl!)
         collectionView!.alwaysBounceVertical = true
-
-
     }
     override func viewWillTransition(to size: CGSize,
                                      with coordinator: UIViewControllerTransitionCoordinator) {
@@ -86,14 +84,13 @@ UIViewControllerPreviewingDelegate {
         return 1
     }
 
-
     override func collectionView(_ collectionView: UICollectionView,
                                  numberOfItemsInSection section: Int) -> Int {
         return self.flickrPhotoList.count
     }
     override func collectionView(_ collectionView: UICollectionView,
-        viewForSupplementaryElementOfKind kind: String,
-        at indexPath: IndexPath) -> UICollectionReusableView {
+                                 viewForSupplementaryElementOfKind kind: String,
+                                 at indexPath: IndexPath) -> UICollectionReusableView {
             switch kind {
             case UICollectionElementKindSectionHeader:
                 let optionalHeaderView = collectionView
@@ -203,17 +200,15 @@ UIViewControllerPreviewingDelegate {
 
 }
 
-
-
-extension PhotosViewController : UICollectionViewDelegateFlowLayout {
+extension PhotosViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath) -> CGSize {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
             return CGSize(width: 75, height: 75)
     }
     func collectionView(_ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        insetForSectionAt section: Int) -> UIEdgeInsets {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        insetForSectionAt section: Int) -> UIEdgeInsets {
             return sectionInsets
     }
 }

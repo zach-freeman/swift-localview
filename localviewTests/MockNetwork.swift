@@ -12,7 +12,7 @@ import Foundation
 class MockNetwork: Networking {
     var requestCount: Int = 0
     init() { }
-    func request(_ latitude: String, longitude: String, completion: @escaping (Any?) -> ()) {
+    func request(_ latitude: String, longitude: String, completion: @escaping (Any?) -> Void) {
         requestCount = 1
         do {
             let flickrResponse: Data = LocalViewTestsHelpers

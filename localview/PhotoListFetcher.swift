@@ -10,12 +10,12 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-protocol PhotoListFetcherDelegate {
+protocol PhotoListFetcherDelegate: AnyObject {
     func photoListFetcherDidFinish(_ photoListFetcher: PhotoListFetcher)
 }
 
 class PhotoListFetcher: Operation {
-    var delegate: PhotoListFetcherDelegate?
+    weak var delegate: PhotoListFetcherDelegate?
     var flickrPhotos: [FlickrPhoto] = []
     var currentLatitude: String!
     var currentLongitude: String!

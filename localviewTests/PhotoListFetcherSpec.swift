@@ -17,14 +17,14 @@ class PhotoListFetcherSpec: QuickSpec {
         var mockPhotoListFetcherDelegate: MockPhotoListFetcherDelegate = MockPhotoListFetcherDelegate()
         beforeEach {
             container.register(Networking.self) { _ in mockNetwork }
-            container.register(PhotoListFetcher.self) { r in
+            container.register(PhotoListFetcher.self) { result in
                 PhotoListFetcher.init(currentLatitude: "test",
                                       currentLongitude: "test",
-                                      currentNetwork: r.resolve(Networking.self)!)
+                                      currentNetwork: result.resolve(Networking.self)!)
             }
-                .initCompleted { r, c in
-                    let thefetch = c as PhotoListFetcher?
-                    thefetch?.network = r.resolve(Networking.self)!
+                .initCompleted { result, child in
+                    let thefetch = child as PhotoListFetcher?
+                    thefetch?.network = result.resolve(Networking.self)!
             }
             container.register(PhotoListFetcherDelegate.self) { _ in mockPhotoListFetcherDelegate }
             fetcher = container.resolve(PhotoListFetcher.self)!

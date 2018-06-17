@@ -33,8 +33,8 @@ class PhotosViewControllerSpec: QuickSpec {
             }
             subjectViewController = theSubjectViewController
             UIApplication.shared.keyWindow!.rootViewController = navigationController
-            let _ = navigationController.view
-            let _ = subjectViewController.view
+            _ = navigationController.view
+            _ = subjectViewController.view
             subjectViewController.loadView()
         }
         describe("viewDidLoad") {

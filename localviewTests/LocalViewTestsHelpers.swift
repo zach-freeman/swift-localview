@@ -11,7 +11,7 @@ import SwiftyJSON
 
 open class LocalViewTestsHelpers {
     static func bundleFileContentsAsData(_ filename: String, filetype: String) -> Data {
-        let bundle = Bundle(for: object_getClass(self))
+        let bundle = Bundle(for: object_getClass(self)!)
         let filePath = bundle.path(forResource: filename, ofType: filetype)
         do {
             let fileContents: Data = try Data(contentsOf: URL(fileURLWithPath: filePath!))
@@ -22,7 +22,7 @@ open class LocalViewTestsHelpers {
         }
     }
     static func fileContentsAsJson(_ fileContents: NSData) -> JSON {
-        var fileContentsJson: JSON = nil
+        var fileContentsJson: JSON = JSON.null
         do {
             let fileContentJsonObject = try JSONSerialization
                 .jsonObject(with: fileContents as Data,

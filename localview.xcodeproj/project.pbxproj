@@ -811,7 +811,7 @@
 					};
 					C3F318C31B7CD9EB00899FB6 = {
 						CreatedOnToolsVersion = 6.4;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 0940;
 						TestTargetID = C3F318AE1B7CD9EB00899FB6;
 					};
 				};
@@ -1115,7 +1115,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#if which swiftlint >/dev/null; then\n#swiftlint\n#else\n#echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\n#fi";
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		F978578F1C4317E800EE9425 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1435,7 +1435,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sparkwing.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "localViewTests/localviewTests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/localview.app/localview";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -1455,7 +1456,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sparkwing.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "localViewTests/localviewTests-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/localview.app/localview";
 				USER_HEADER_SEARCH_PATHS = "";
 			};

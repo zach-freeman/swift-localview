@@ -25,9 +25,9 @@ class SplitViewTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioni
         let bottomFrame = CGRect(x: 0, y: viewSize.height/2, width: viewSize.width, height: viewSize.height/2)
         //create snapshots
         let snapshotTop: UIView = fromViewController!.view
-            .resizableSnapshotView(from: topFrame, afterScreenUpdates:false, withCapInsets:UIEdgeInsets.zero)!
+            .resizableSnapshotView(from: topFrame, afterScreenUpdates: false, withCapInsets: UIEdgeInsets.zero)!
         let snapshotBottom: UIView = fromViewController!.view
-            .resizableSnapshotView(from: bottomFrame, afterScreenUpdates:false, withCapInsets:UIEdgeInsets.zero)!
+            .resizableSnapshotView(from: bottomFrame, afterScreenUpdates: false, withCapInsets: UIEdgeInsets.zero)!
         snapshotTop.frame = topFrame
         snapshotBottom.frame = bottomFrame
         //remove the original view from the container
@@ -54,6 +54,4 @@ class SplitViewTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioni
         })
 
     }
-
-
 }

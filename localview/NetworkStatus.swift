@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol NetworkStatusDelegate {
+protocol NetworkStatusDelegate: AnyObject {
   func networkStatusDidFinish(_ networkStatus: NetworkStatus)
 }
 
 class NetworkStatus: Operation {
-  var delegate: NetworkStatusDelegate?
+  weak var delegate: NetworkStatusDelegate?
   var isReachable: Bool = false
   override func main() {
     if self.isCancelled {

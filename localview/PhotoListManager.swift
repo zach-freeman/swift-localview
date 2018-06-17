@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol PhotoListManagerDelegate {
+protocol PhotoListManagerDelegate: AnyObject {
     func photoListManagerDidFinish(_ photoListManager: PhotoListManager, alert: UIAlertController?)
 }
 
@@ -16,7 +16,7 @@ class PhotoListManager: NSObject,
 NetworkStatusDelegate,
 LocationUpdaterDelegate,
 PhotoListFetcherDelegate {
-    var delegate: PhotoListManagerDelegate?
+    weak var delegate: PhotoListManagerDelegate?
     var currentPlacemark: String!
     var flickrPhotoList: [FlickrPhoto] = []
     var locationUpdater: LocationUpdater!
@@ -74,7 +74,7 @@ PhotoListFetcherDelegate {
     self.networkAccessQueue.cancelAllOperations()
     self.flickrPhotoList = photoListFetcher.flickrPhotos
     DispatchQueue.main.async(execute: {
-        self.delegate?.photoListManagerDidFinish(self, alert : nil)
+        self.delegate?.photoListManagerDidFinish(self, alert: nil)
     })
   }
 }
