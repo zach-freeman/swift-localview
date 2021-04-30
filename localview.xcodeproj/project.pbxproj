@@ -40,9 +40,6 @@
 		C3EC11BD1B874E9B00FB672C /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EC11AC1B874E9B00FB672C /* UIImageView+WebCache.m */; };
 		C3EC11BE1B874E9B00FB672C /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EC11AE1B874E9B00FB672C /* UIView+WebCacheOperation.m */; };
 		C3F318B51B7CD9EB00899FB6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3F318B41B7CD9EB00899FB6 /* AppDelegate.swift */; };
-		C3F318BA1B7CD9EB00899FB6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3F318B81B7CD9EB00899FB6 /* Main.storyboard */; };
-		C3F318BC1B7CD9EB00899FB6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3F318BB1B7CD9EB00899FB6 /* Images.xcassets */; };
-		C3F318BF1B7CD9EB00899FB6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3F318BD1B7CD9EB00899FB6 /* LaunchScreen.xib */; };
 		C3F5830D1BCD3B4F001873E9 /* LocationUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91053881B8923DF00AF0A71 /* LocationUpdater.swift */; };
 		D914C6EA1D89C95600C16DD5 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D914C6D31D89C38D00C16DD5 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D91E3F9A1C13680600836CC4 /* PhotosViewControllerSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91E3F991C13680600836CC4 /* PhotosViewControllerSpec.swift */; };
@@ -69,7 +66,6 @@
 		D91E3FC81C136F2D00836CC4 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EC11AA1B874E9B00FB672C /* UIImageView+HighlightedWebCache.m */; };
 		D91E3FC91C136F3000836CC4 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EC11AC1B874E9B00FB672C /* UIImageView+WebCache.m */; };
 		D91E3FCA1C136F3400836CC4 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = C3EC11AE1B874E9B00FB672C /* UIView+WebCacheOperation.m */; };
-		D91E3FCB1C14A15400836CC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3F318B81B7CD9EB00899FB6 /* Main.storyboard */; };
 		D93D330B1C8CE86B00CECF60 /* MockNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D330A1C8CE86B00CECF60 /* MockNetwork.swift */; };
 		D93D33241C8CE8A700CECF60 /* MockPhotoListFetcherDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D33231C8CE8A700CECF60 /* MockPhotoListFetcherDelegate.swift */; };
 		D96FEBF51CB04E4F005AAF89 /* Swinject.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F97857761C43179B00EE9425 /* Swinject.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -807,11 +803,11 @@
 					C3F318AE1B7CD9EB00899FB6 = {
 						CreatedOnToolsVersion = 6.4;
 						DevelopmentTeam = 7M23UJ52VC;
-						LastSwiftMigration = 0800;
+						LastSwiftMigration = 1010;
 					};
 					C3F318C31B7CD9EB00899FB6 = {
 						CreatedOnToolsVersion = 6.4;
-						LastSwiftMigration = 0940;
+						LastSwiftMigration = 1010;
 						TestTargetID = C3F318AE1B7CD9EB00899FB6;
 					};
 				};
@@ -1085,9 +1081,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3F318BA1B7CD9EB00899FB6 /* Main.storyboard in Resources */,
-				C3F318BF1B7CD9EB00899FB6 /* LaunchScreen.xib in Resources */,
-				C3F318BC1B7CD9EB00899FB6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1095,7 +1088,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D91E3FCB1C14A15400836CC4 /* Main.storyboard in Resources */,
 				C3749D221BCBE15800BF4729 /* good-flickr-response.json in Resources */,
 				C3749D2C1BCC2A4700BF4729 /* bad-flickr-response.json in Resources */,
 			);
@@ -1374,7 +1366,7 @@
 		C3F318CF1B7CD9EB00899FB6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-4";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
@@ -1390,14 +1382,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "localview/localview-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
 		C3F318D01B7CD9EB00899FB6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-4";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
@@ -1412,8 +1404,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.sparkwing.localviewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_OBJC_BRIDGING_HEADER = "localview/localview-Bridging-Header.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -1435,8 +1428,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sparkwing.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "localviewTests/localviewTests-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/localview.app/localview";
 				USER_HEADER_SEARCH_PATHS = "";
 			};
@@ -1456,8 +1448,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.sparkwing.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "localviewTests/localviewTests-Bridging-Header.h";
-				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/localview.app/localview";
 				USER_HEADER_SEARCH_PATHS = "";
 			};

@@ -25,7 +25,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
             NotificationCenter.default.addObserver(
                 self,
                 selector: #selector(PhotoFullScreenViewController.orientationChanged(_:)),
-                name: NSNotification.Name.UIDeviceOrientationDidChange,
+                name: UIDevice.orientationDidChangeNotification,
                 object: UIDevice.current)
             self.createViews()
         }
@@ -46,7 +46,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         let viewBounds: CGRect = self.viewBounds()
         self.createScrollView(viewBounds)
         self.createImageView(viewBounds)
-        self.view.bringSubview(toFront: doneButton)
+        self.view.bringSubviewToFront(doneButton)
     }
     func viewBounds() -> CGRect {
         var viewFrame: CGRect = CGRect.zero
@@ -66,7 +66,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     func createImageView(_ viewBounds: CGRect) {
         self.fullImageView = UIImageView(frame: viewBounds)
-        self.fullImageView.contentMode = UIViewContentMode.scaleAspectFill
+        self.fullImageView.contentMode = UIView.ContentMode.scaleAspectFill
         self.fullImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.fullImageView.clipsToBounds = true
         self.containerScrollView.addSubview(self.fullImageView)

@@ -92,7 +92,7 @@ UIViewControllerPreviewingDelegate {
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
             switch kind {
-            case UICollectionElementKindSectionHeader:
+            case UICollectionView.elementKindSectionHeader:
                 let optionalHeaderView = collectionView
                     .dequeueReusableSupplementaryView(ofKind: kind,
                                                       withReuseIdentifier: "PhotosHeaderView",
