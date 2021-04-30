@@ -78,7 +78,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     @IBAction func doneButtonTapped(_ sender: AnyObject) {
-        presentingViewController?.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
