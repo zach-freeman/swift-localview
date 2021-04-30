@@ -54,9 +54,13 @@ UIViewControllerPreviewingDelegate {
         super.viewWillTransition(to: size, with: coordinator)
     }
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         if self.photoFetchState == .photoListNotFetched {
             self.startPhotoListManager()
         }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
     }
     @objc func refresh() {
         self.photoFetchState = .photoListNotFetched
@@ -92,7 +96,7 @@ UIViewControllerPreviewingDelegate {
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
             switch kind {
-            case UICollectionElementKindSectionHeader:
+            case UICollectionView.elementKindSectionHeader:
                 let optionalHeaderView = collectionView
                     .dequeueReusableSupplementaryView(ofKind: kind,
                                                       withReuseIdentifier: "PhotosHeaderView",
@@ -146,7 +150,8 @@ UIViewControllerPreviewingDelegate {
             return
         }
         photoFullScreenViewController.flickrPhoto = photoForIndexPath(indexPath)
-        photoFullScreenViewController.transitioningDelegate = self
+        self.definesPresentationContext = true
+        photoFullScreenViewController.modalPresentationStyle = .overFullScreen
         present(photoFullScreenViewController, animated: true, completion: nil)
     }
     // MARK: - Photo List Manager

@@ -1,6 +1,0 @@
-[submodule "ThirdPartyLib/Quick"]
-	path = ThirdPartyLib/Quick
-	url = https://github.com/Quick/Quick.git
-[submodule "ThirdPartyLib/Nimble"]
-	path = ThirdPartyLib/Nimble
-	url = https://github.com/Quick/Nimble.git

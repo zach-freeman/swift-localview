@@ -16,7 +16,7 @@ class FadeViewTransitionAnimator: NSObject, UIViewControllerAnimatedTransitionin
         return duration
     }
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        //fade the new view in
+        // fade the new view in
         let containerView = transitionContext.containerView
         let fromViewController = transitionContext
             .viewController(forKey: UITransitionContextViewControllerKey.from)

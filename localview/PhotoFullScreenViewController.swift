@@ -25,7 +25,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
             NotificationCenter.default.addObserver(
                 self,
                 selector: #selector(PhotoFullScreenViewController.orientationChanged(_:)),
-                name: NSNotification.Name.UIDeviceOrientationDidChange,
+                name: UIDevice.orientationDidChangeNotification,
                 object: UIDevice.current)
             self.createViews()
         }
@@ -46,7 +46,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         let viewBounds: CGRect = self.viewBounds()
         self.createScrollView(viewBounds)
         self.createImageView(viewBounds)
-        self.view.bringSubview(toFront: doneButton)
+        self.view.bringSubviewToFront(doneButton)
     }
     func viewBounds() -> CGRect {
         var viewFrame: CGRect = CGRect.zero
@@ -66,7 +66,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     func createImageView(_ viewBounds: CGRect) {
         self.fullImageView = UIImageView(frame: viewBounds)
-        self.fullImageView.contentMode = UIViewContentMode.scaleAspectFill
+        self.fullImageView.contentMode = UIView.ContentMode.scaleAspectFill
         self.fullImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         self.fullImageView.clipsToBounds = true
         self.containerScrollView.addSubview(self.fullImageView)
@@ -78,7 +78,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     @IBAction func doneButtonTapped(_ sender: AnyObject) {
-        presentingViewController?.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -98,7 +98,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     func showPhotoAfterDownload() {
         let sdWebImageManager: SDWebImageManager = SDWebImageManager.shared()
-        let progress: SDWebImageDownloaderProgressBlock = { [weak self] (receivedSize, expectedSize, targetURL) in
+        let progress: SDWebImageDownloaderProgressBlock = { [weak self] (receivedSize, expectedSize, _) in
             guard self != nil else {
                 return
             }
@@ -111,7 +111,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
             }
         }
 
-        let completion: SDInternalCompletionBlock = { [weak self] (image, data, error, cacheType, finished, imageURL) in
+        let completion: SDInternalCompletionBlock = { [weak self] (image, _, _, _, _, _) in
             guard self != nil else {
                 return
             }

@@ -1,6 +1,6 @@
 import Quick
 import Nimble
-import Swinject
+// import Swinject
 @testable import localview
 class PhotoListFetcherSpec: QuickSpec {
 
