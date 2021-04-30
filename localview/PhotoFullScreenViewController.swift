@@ -98,7 +98,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
     }
     func showPhotoAfterDownload() {
         let sdWebImageManager: SDWebImageManager = SDWebImageManager.shared()
-        let progress: SDWebImageDownloaderProgressBlock = { [weak self] (receivedSize, expectedSize, targetURL) in
+        let progress: SDWebImageDownloaderProgressBlock = { [weak self] (receivedSize, expectedSize, _) in
             guard self != nil else {
                 return
             }
@@ -111,7 +111,7 @@ class PhotoFullScreenViewController: UIViewController, UIScrollViewDelegate {
             }
         }
 
-        let completion: SDInternalCompletionBlock = { [weak self] (image, data, error, cacheType, finished, imageURL) in
+        let completion: SDInternalCompletionBlock = { [weak self] (image, _, _, _, _, _) in
             guard self != nil else {
                 return
             }

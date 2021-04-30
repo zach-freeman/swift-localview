@@ -39,8 +39,8 @@ class SplitViewTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioni
         containerView.addSubview(snapshotBottom)
         UIView.animate(withDuration: duration, animations: {
             // adjust the new frames
-            var newTopFrame:CGRect = topFrame
-            var newBottomFrame:CGRect = bottomFrame
+            var newTopFrame: CGRect = topFrame
+            var newBottomFrame: CGRect = bottomFrame
             newTopFrame.origin.y -= topFrame.size.height
             newBottomFrame.origin.y += bottomFrame.size.height
             // set the frames to animate them
