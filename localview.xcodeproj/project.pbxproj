@@ -90,6 +90,8 @@
 		F9206567263C883200AA10F0 /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9206566263C883200AA10F0 /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F9206569263C884200AA10F0 /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F9206568263C884200AA10F0 /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F920656A263C8BBC00AA10F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3F318B81B7CD9EB00899FB6 /* Main.storyboard */; };
+		F920656B263C8C8000AA10F0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3F318BD1B7CD9EB00899FB6 /* LaunchScreen.xib */; };
+		F920656C263C96A400AA10F0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C3F318BB1B7CD9EB00899FB6 /* Images.xcassets */; };
 		F920D4B31C5EC62F00EE4484 /* LocationUpdaterSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F920D4B21C5EC62F00EE4484 /* LocationUpdaterSpec.swift */; };
 		F92C5F221C4BE01300688BCF /* PhotoListFetcherSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C5F211C4BE01300688BCF /* PhotoListFetcherSpec.swift */; };
 		F92C5F3F1C4C083B00688BCF /* Flickr.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92C5F3E1C4C083B00688BCF /* Flickr.swift */; };
@@ -799,6 +801,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F920656C263C96A400AA10F0 /* Images.xcassets in Resources */,
+				F920656B263C8C8000AA10F0 /* LaunchScreen.xib in Resources */,
 				F920656A263C8BBC00AA10F0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
