@@ -5,11 +5,10 @@ This is a simple universal iOS app written in Swift that pulls images from the F
 ### Getting Started ###
 1. Clone the project
 2. cd to the project
-3. git submodule init (Quick & Nimble are included via git submodules)
-4. git submodule update
-5. carthage update (Swinject is included via [Carthage](https://github.com/Carthage/Carthage))
-6. open localview.xcodeproj
-7. You can get an API Key from your [Flickr](https://www.flickr.com) account. You need this to use the app. Just drop it in FlickrConstants.swift.
+3. git submodule update
+4. carthage update (Quick, Nimble, and Swinject are included via [Carthage](https://github.com/Carthage/Carthage))
+5. open localview.xcodeproj
+6. You can get an API Key from your [Flickr](https://www.flickr.com) account. You need this to use the app. Just drop it in FlickrConstants.swift.
 
 ### Testing ###
 

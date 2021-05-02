@@ -3,13 +3,13 @@
 //  localview
 //
 //  Created by Zach Freeman on 8/13/15.
-//  Copyright (c) 2015 sparkwing. All rights reserved.
+//  Copyright (c) 2021 sparkwing. All rights reserved.
 //
 
 import UIKit
 
 class FlickrConstants: NSObject {
-  static let kFlickrApiKey: String = "239939c9c5ea4ee98a898efa823e1741"
+  static let kFlickrApiKey: String = "==redacted=="
   static let kFlickrUrl: String = "https://www.flickr.com/services/rest/"
   static let kSearchMethod: String = "flickr.photos.search"
   static let kFormatType: String = "json"
